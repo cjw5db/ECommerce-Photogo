@@ -25,20 +25,26 @@
 		</header>
 
     <div>
-      <!-- ADD CONTENT HERE -->
-			<form action="/action_page.php">
-			<h1> <b> Sign Up Page </b> </h1> </br> </br>
-			<p> <label for="usersEmail" class="email" data-icon="e" > Enter Your Email Address </label>
-			<input id="usersEmail" name="email" required="required" type="email" placeholder="******@virginia.edu" /> </p> </br>
 
-			<p> <label for="usersPwd" name="password" data-icon="p" > Enter Your New Password </label>
-			<input id="usersPwd" name="password" required="required" type="password" placeholder="N6Y$@NBB1997" /> </p> </br>
+			<h1 style="text-align:center"> <b> Sign Up </b> </h1>
+			<form style="padding-left:50px; padding-right:50px">
+				<div class="form-group">
+					<label for="usersEmail">Email</label>
+    			<input type="email" class="form-control" id="usersEmail" placeholder="email">
+				</div>
 
-			<p> <label for="usersPwdConfirm" name="passwordConfirm" data-icon="p" > Confirm Your New Password </label>
-			<input id="usersPwdConfirm" name="passwordConfirm" required="required" type="password" placeholder="N6Y$@NBB1997" /> </p> </br>
+				<div class="form-group">
+					<label for="usersPwd">Password</label>
+    			<input type="password" class="form-control" id="usersPwd" placeholder="password">
+				</div>
 
-			<!-- Add a sign in button here -->
+				<div class="form-group">
+					<label for="usersPwdConfirm">Confirm Password</label>
+    			<input type="password" class="form-control" id="usersPwdConfirm" placeholder="password">
+				</div>
 
+				<button type="submit" class="btn btn-primary">Submit</button>
+			</form>
     </div>
 
   </body>
