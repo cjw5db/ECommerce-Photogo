@@ -123,9 +123,14 @@
     if ($anyErr == FALSE){
       include('get_db_connection.php');
 
-      //$isUsernameValid = pg_query($db, "SELECT email FROM users");
-      pg_insert($db, "users", $fields);
+      $result = pg_query_params($db, "SELECT email FROM users WHERE email = $1", array($fields['email']));
 
+      if (pg_num_rows($result) != 0){
+        $emailErr = "Email already taken - please enter a different one";
+      }
+      else{
+        pg_insert($db, "users", $fields);
+      }
     }
   }
  ?>
