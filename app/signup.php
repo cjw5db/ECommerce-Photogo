@@ -117,7 +117,9 @@
       $anyErr = TRUE;
     }
     else{
-      $fields["passwordHash"] = htmlspecialchars($_POST["usersPwd"]);
+      $raw_password = htmlspecialchars($_POST["usersPwd"]);
+      $fields["passwordHash"] = password_hash($raw_password, PASSWORD_DEFAULT);
+
     }
 
     if ($anyErr == FALSE){
