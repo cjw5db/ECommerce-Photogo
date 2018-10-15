@@ -12,8 +12,8 @@
       'address' => '',
       'city' => '',
       'state' => '',
-      'zip' => '',
-      'pwd' => '');
+      'zip code' => '',
+      'passwordHash' => '');
 
     if(empty($_POST["usersName"])){
       $nameErr = "Name must have a value";
@@ -98,7 +98,7 @@
       $anyErr = TRUE;
     }
     else{
-      $fields["zip"] = htmlspecialchars($_POST["usersZip"]);
+      $fields["zip code"] = htmlspecialchars($_POST["usersZip"]);
     }
 
 
@@ -117,11 +117,17 @@
       $anyErr = TRUE;
     }
     else{
-      $fields["pwd"] = htmlspecialchars($_POST["usersPwd"]);
+      $fields["passwordHash"] = htmlspecialchars($_POST["usersPwd"]);
     }
 
-  }
+    if ($anyErr == FALSE){
+      include('get_db_connection.php');
 
+      //$isUsernameValid = pg_query($db, "SELECT email FROM users");
+      pg_insert($db, "users", $fields);
+
+    }
+  }
  ?>
 
 <html>
