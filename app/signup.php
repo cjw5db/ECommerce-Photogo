@@ -4,6 +4,8 @@
     $nameErr = $emailErr = $addressErr = $cityErr =
     $stateErr = $zipErr = $pwdErr = $pwdConfirmErr = NULL;
 
+    $anyErr = FALSE;
+
     $fields = array(
       'name' => '',
       'email' => '',
@@ -15,9 +17,11 @@
 
     if(empty($_POST["usersName"])){
       $nameErr = "Name must have a value";
+      $anyErr = TRUE;
     }
     else if(preg_match("/[^a-zA-Z\s]/", htmlspecialchars($_POST["usersName"])) == 1){
       $nameErr = "Name must only contain letters";
+      $anyErr = TRUE;
     }
     else{
       $fields["name"] = htmlspecialchars($_POST["usersName"]);
@@ -27,9 +31,11 @@
 
     if(empty($_POST["usersEmail"])){
       $emailErr = "Email must have a value";
+      $anyErr = TRUE;
     }
-    else if(preg_match("/*[@]*[.]/", htmlspecialchars($_POST["usersEmail"])) == 1){
+    else if(preg_match("/^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]{2,}$/", htmlspecialchars($_POST["usersEmail"])) == 0){
       $emailErr = "Email must be of the correct format";
+      $anyErr = TRUE;
     }
     else{
       $fields["email"] = htmlspecialchars($_POST["usersEmail"]);
@@ -39,9 +45,11 @@
 
     if(empty($_POST["usersAddress"])){
       $addressErr = "Address must have a value";
+      $anyErr = TRUE;
     }
     else if(preg_match("/[^a-zA-Z0-9\s]/", htmlspecialchars($_POST["usersAddress"])) == 1){
       $addressErr = "Address must only contain letters and numbers";
+      $anyErr = TRUE;
     }
     else{
       $fields["address"] = htmlspecialchars($_POST["usersAddress"]);
@@ -51,9 +59,11 @@
 
     if(empty($_POST["usersCity"])){
       $cityErr = "City must have a value";
+      $anyErr = TRUE;
     }
     else if(preg_match("/[^a-zA-Z\s]/", htmlspecialchars($_POST["usersCity"])) == 1){
       $cityErr = "City must only contain letters";
+      $anyErr = TRUE;
     }
     else{
       $fields["city"] = htmlspecialchars($_POST["usersCity"]);
@@ -63,9 +73,11 @@
 
     if(empty($_POST["usersState"])){
       $stateErr = "State must have a value";
+      $anyErr = TRUE;
     }
     else if(preg_match("/[^a-zA-Z\s]/", htmlspecialchars($_POST["usersState"])) == 1){
       $stateErr = "State must only contain letters";
+      $anyErr = TRUE;
     }
     else{
       $fields["state"] = htmlspecialchars($_POST["usersState"]);
@@ -75,12 +87,15 @@
 
     if(empty($_POST["usersZip"])){
       $zipErr = "Zip must have a value";
+      $anyErr = TRUE;
     }
     else if(preg_match("/[^0-9]/", htmlspecialchars($_POST["usersZip"])) == 1){
       $zipErr = "Zip must only be numbers";
+      $anyErr = TRUE;
     }
     else if (strlen(htmlspecialchars($_POST["usersZip"])) !== 5){
       $zipErr = "Zip must be exactly five numbers";
+      $anyErr = TRUE;
     }
     else{
       $fields["zip"] = htmlspecialchars($_POST["usersZip"]);
@@ -90,13 +105,16 @@
 
     if(empty($_POST["usersPwd"])){
       $pwdErr = "Password must have a value";
+      $anyErr = TRUE;
     }
     else if(empty($_POST["usersPwdConfirm"])){
       $pwdConfirmErr = "Password must have a value";
+      $anyErr = TRUE;
     }
     else if(strcmp(htmlspecialchars($_POST["usersPwdConfirm"]), htmlspecialchars($_POST["usersPwd"])) !== 0){
       $pwdErr = "Passwords must match";
       $pwdConfirmErr = "Passwords must match";
+      $anyErr = TRUE;
     }
     else{
       $fields["pwd"] = htmlspecialchars($_POST["usersPwd"]);
@@ -126,7 +144,7 @@
 		      <a class="nav-item nav-link" href="about.html">About Us</a>
 		      <a class="nav-item nav-link" href="contact.html">Contact Us</a>
 		      <a class="nav-item nav-link" href="login.html">Login</a>
-					<a class="nav-item nav-link" href="signup.html">Sign Up</a>
+					<a class="nav-item nav-link" href="signup.php">Sign Up</a>
 		    </div>
 			</nav>
 		</header>
@@ -138,33 +156,27 @@
 			<form style="padding-left:50px; padding-right:50px" action='<?php htmlspecialchars($_SERVER["PHP_SELF"]);?>' method='post' role="form">
 
 				<div class="form-group">
-					<label for="usersName">Name</label>
+					<label for="usersName">Name <span style="color:red"><?php if(isset($nameErr)) echo "*".$nameErr."*";?></span></label>
     			<input type="text" name="usersName" class="col-sm-3 form-control" id="usersName" placeholder="name">
 				</div>
 
-        <p><?php
-          if(isset($nameErr))
-            echo $nameErr;
-          ?>
-        </p>
-
 				<div class="form-group">
-					<label for="usersEmail">Email</label>
+					<label for="usersEmail">Email <span style="color:red"><?php if(isset($emailErr)) echo "*".$emailErr."*";?></span></label>
     			<input type="email" name="usersEmail" class="col-sm-3 form-control" id="usersEmail" placeholder="email">
 				</div>
 
 				<div class="form-group">
-					<label for="usersAddress">Address</label>
+					<label for="usersAddress">Address <span style="color:red"><?php if(isset($addressErr)) echo "*".$addressErr."*";?></span></label>
     			<input type="text" name="usersAddress" class="col-sm-3 form-control" id="usersAddress" placeholder="address">
 				</div>
 
 				<div class="form-group">
-					<label for="usersCity">City</label>
+					<label for="usersCity">City <span style="color:red"><?php if(isset($cityErr)) echo "*".$cityErr."*";?></span></label>
     			<input type="text" name="usersCity" class="col-sm-2 form-control" id="usersCity" placeholder="city">
 				</div>
 
 				<div class="form-group">
-					<label for="usersState">State</label>
+					<label for="usersState">State <span style="color:red"><?php if(isset($stateErr)) echo "*".$stateErr."*";?></span></label>
 					<select name="usersState" class="col-sm-1 form-control" id="usersState">
 						<option value="AL">Alabama</option>
 						<option value="AK">Alaska</option>
@@ -221,17 +233,17 @@
 				</div>
 
 				<div class="form-group">
-					<label for="usersZip">Zip Code</label>
+					<label for="usersZip">Zip Code <span style="color:red"><?php if(isset($zipErr)) echo "*".$zipErr."*";?></span></label>
     			<input type="text" name="usersZip" class="col-sm-1 form-control" id="usersZip" placeholder="zip code">
 				</div>
 
 				<div class="form-group">
-					<label for="usersPwd">Password</label>
+					<label for="usersPwd">Password <span style="color:red"><?php if(isset($pwdErr)) echo "*".$pwdErr."*";?></span></label>
     			<input type="password" name="usersPwd" class="col-sm-3 form-control" id="usersPwd" placeholder="password">
 				</div>
 
 				<div class="form-group">
-					<label for="usersPwdConfirm">Confirm Password</label>
+					<label for="usersPwdConfirm">Confirm Password <span style="color:red"><?php if(isset($pwdConfirmErr)) echo "*".$pwdConfirmErr."*";?></span></label>
     			<input type="password" name="usersPwdConfirm" class="col-sm-3 form-control" id="usersPwdConfirm" placeholder="password">
 				</div>
 
