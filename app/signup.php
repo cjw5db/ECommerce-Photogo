@@ -147,50 +147,84 @@
 		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 	</head>
 	<body>
     <header>
-			<nav class="navbar navbar-expand-lg navbar-light style="background-color: #d3d3d3;>
-				<a href="index.html"><i class="fas fa-camera-retro fa-2x">PhotoGo</i></a>
-		    <div class="navbar-nav">
-		      <a class="nav-item nav-link" href="about.html">About Us</a>
-		      <a class="nav-item nav-link" href="contact.html">Contact Us</a>
-		      <a class="nav-item nav-link" href="login.html">Login</a>
-					<a class="nav-item nav-link" href="signup.php">Sign Up</a>
-		    </div>
-			</nav>
+      <nav class="navbar navbar-expand-lg navbar-light">
+  			<a class="nav-item nav-link" href="index.html"><i class="fas fa-camera-retro fa-2x">PhotoGo</i></a>
+  	    <div class="navbar-nav">
+  	      <a class="nav-item nav-link" href="about.html" style="border:none">About Us</a>
+  	      <a class="nav-item nav-link" href="contact.html" style="border:none">Contact Us</a>
+  	      <a class="nav-item nav-link" href="login.html" style="border:none">Login</a>
+  				<a class="nav-item nav-link" href="signup.php" style="border:none">Sign Up</a>
+  	    </div>
+  		</nav>
 		</header>
 
-    <div>
 
-			<h1 style="text-align:center"> <b> Sign Up </b> </h1>
+    <div class="jumbotron text-center">
+      <h1>Sign Up</h1>
+    </div>
+
+    <div class="container">
 
 			<form style="padding-left:50px; padding-right:50px" action='<?php htmlspecialchars($_SERVER["PHP_SELF"]);?>' method='post' role="form">
 
 				<div class="form-group">
-					<label for="usersName">Name <span style="color:red"><?php if(isset($nameErr)) echo "*".$nameErr."*";?></span></label>
-    			<input type="text" name="usersName" class="col-sm-3 form-control" id="usersName" placeholder="name">
+					<label for="usersName">Name</label>
+          <?php if(isset($nameErr)) : ?>
+      			<input type="text" name="usersName" class="col-sm-3 form-control is-invalid" id="usersName" placeholder="name">
+            <div class="invalid-feedback">
+              <?php echo $nameErr ;?>
+            </div>
+          <?php else: ?>
+            <input type="text" name="usersName" class="col-sm-3 form-control is-valid" id="usersName" placeholder="name">
+          <?php endif; ?>
 				</div>
 
 				<div class="form-group">
-					<label for="usersEmail">Email <span style="color:red"><?php if(isset($emailErr)) echo "*".$emailErr."*";?></span></label>
-    			<input type="email" name="usersEmail" class="col-sm-3 form-control" id="usersEmail" placeholder="email">
+					<label for="usersEmail">Email</label>
+          <?php if(isset($emailErr)) : ?>
+    			  <input type="email" name="usersEmail" class="col-sm-3 form-control is-invalid" id="usersEmail" placeholder="email">
+            <div class="invalid-feedback">
+              <?php echo $emailErr ;?>
+            </div>
+          <?php else : ?>
+            <input type="email" name="usersEmail" class="col-sm-3 form-control is-valid" id="usersEmail" placeholder="email">
+          <?php endif ; ?>
 				</div>
 
 				<div class="form-group">
-					<label for="usersAddress">Address <span style="color:red"><?php if(isset($addressErr)) echo "*".$addressErr."*";?></span></label>
-    			<input type="text" name="usersAddress" class="col-sm-3 form-control" id="usersAddress" placeholder="address">
+					<label for="usersAddress">Address</label>
+          <?php if(isset($addressErr)) : ?>
+    			  <input type="text" name="usersAddress" class="col-sm-3 form-control is-invalid" id="usersAddress" placeholder="address">
+            <div class="invalid-feedback">
+              <?php echo $addressErr ;?>
+            </div>
+          <?php else : ?>
+            <input type="text" name="usersAddress" class="col-sm-3 form-control is-valid" id="usersAddress" placeholder="address">
+          <?php endif ; ?>
 				</div>
 
 				<div class="form-group">
-					<label for="usersCity">City <span style="color:red"><?php if(isset($cityErr)) echo "*".$cityErr."*";?></span></label>
-    			<input type="text" name="usersCity" class="col-sm-2 form-control" id="usersCity" placeholder="city">
-				</div>
+					<label for="usersCity">City</label>
+          <?php if(isset($cityErr)) : ?>
+    			  <input type="text" name="usersCity" class="col-sm-2 form-control is-invalid" id="usersCity" placeholder="city">
+            <div class="invalid-feedback">
+              <?php echo $cityErr;?>
+            </div>
+          <?php else : ?>
+            <input type="text" name="usersCity" class="col-sm-2 form-control is-valid" id="usersCity" placeholder="city">
+          <?php endif ;?>
+        </div>
 
 				<div class="form-group">
-					<label for="usersState">State <span style="color:red"><?php if(isset($stateErr)) echo "*".$stateErr."*";?></span></label>
-					<select name="usersState" class="col-sm-1 form-control" id="usersState">
+					<label for="usersState">State</label>
+          <?php if(isset($stateErr)) : ?>
+					  <select name="usersState" class="col-sm-1 form-control is-invalid" id="usersState">
+          <?php else : ?>
+            <select name="usersState" class="col-sm-1 form-control is-valid" id="usersState">
+          <?php endif;?>
 						<option value="AL">Alabama</option>
 						<option value="AK">Alaska</option>
 						<option value="AZ">Arizona</option>
@@ -243,28 +277,57 @@
 						<option value="WI">Wisconsin</option>
 						<option value="WY">Wyoming</option>
 					</select>
+          <?php if(isset($stateErr)) : ?>
+            <div class="invalid-feedback">
+              <?php echo $stateErr ;?>
+            </div>
+          <?php endif;?>
 				</div>
 
 				<div class="form-group">
-					<label for="usersZip">Zip Code <span style="color:red"><?php if(isset($zipErr)) echo "*".$zipErr."*";?></span></label>
-    			<input type="text" name="usersZip" class="col-sm-1 form-control" id="usersZip" placeholder="zip code">
+					<label for="usersZip">Zip Code</label>
+          <?php if(isset($zipErr)) : ?>
+    			  <input type="text" name="usersZip" class="col-sm-1 form-control is-invalid" id="usersZip" placeholder="zip code">
+            <div class="invalid-feedback">
+              <?php echo $zipErr ;?>
+            </div>
+          <?php else : ?>
+            <input type="text" name="usersZip" class="col-sm-1 form-control is-valid" id="usersZip" placeholder="zip code">
+          <?php endif;?>
 				</div>
 
 				<div class="form-group">
-					<label for="usersPwd">Password <span style="color:red"><?php if(isset($pwdErr)) echo "*".$pwdErr."*";?></span></label>
-    			<input type="password" name="usersPwd" class="col-sm-3 form-control" id="usersPwd" placeholder="password">
-				</div>
+					<label for="usersPwd">Password</label>
+          <?php if(isset($pwdErr)) :?>
+    			  <input type="password" name="usersPwd" class="col-sm-3 form-control is-invalid" id="usersPwd" placeholder="password">
+            <div class="invalid-feedback">
+              <?php echo $pwdErr ;?>
+            </div>
+          <?php else : ?>
+            <input type="password" name="usersPwd" class="col-sm-3 form-control is-valid" id="usersPwd" placeholder="password">
+          <?php endif ;?>
+        </div>
 
 				<div class="form-group">
-					<label for="usersPwdConfirm">Confirm Password <span style="color:red"><?php if(isset($pwdConfirmErr)) echo "*".$pwdConfirmErr."*";?></span></label>
-    			<input type="password" name="usersPwdConfirm" class="col-sm-3 form-control" id="usersPwdConfirm" placeholder="password">
+					<label for="usersPwdConfirm">Confirm Password</label>
+          <?php if(isset($pwdConfirmErr)) :?>
+    			  <input type="password" name="usersPwdConfirm" class="col-sm-3 form-control is-invalid" id="usersPwdConfirm" placeholder="password">
+            <div class="invalid-feedback">
+              <?php echo $pwdConfirmErr ;?>
+            </div>
+          <?php else : ?>
+             <input type="password" name="usersPwdConfirm" class="col-sm-3 form-control is-valid" id="usersPwdConfirm" placeholder="password">
+          <?php endif ;?>
 				</div>
 
 				<button type="submit" class="btn btn-primary">Submit</button>
 
 			</form>
-
 		</div>
+
+    <nav class="navbar navbar-light bg-light">
+  		<a class="nav-item nav-link" href="index.html"><i class="fas fa-camera-retro fa-2x">PhotoGo</i></a>
+		</nav>
 
   </body>
 </html>
