@@ -103,7 +103,12 @@
 
 
 
-    if(empty($_POST["usersPwd"])){
+    if(empty($_POST["usersPwd"]) and empty($_POST["usersPwdConfirm"])){
+      $pwdErr = "Password must have a value";
+      $pwdConfirmErr = "Password must have a value";
+      $anyErr = TRUE;
+    }
+    else if(empty($_POST["usersPwd"])){
       $pwdErr = "Password must have a value";
       $anyErr = TRUE;
     }
@@ -119,7 +124,6 @@
     else{
       $raw_password = htmlspecialchars($_POST["usersPwd"]);
       $fields["passwordHash"] = password_hash($raw_password, PASSWORD_DEFAULT);
-
     }
 
     if ($anyErr == FALSE){
@@ -168,166 +172,176 @@
 
     <div class="container">
 
-			<form style="padding-left:50px; padding-right:50px" action='<?php htmlspecialchars($_SERVER["PHP_SELF"]);?>' method='post' role="form">
+			<form action='<?php htmlspecialchars($_SERVER["PHP_SELF"]);?>' method='post' role="form">
+        <div class="form-row justify-content-center">
 
-				<div class="form-group">
-					<label for="usersName">Name</label>
-          <?php if(isset($nameErr)) : ?>
-      			<input type="text" name="usersName" class="col-sm-3 form-control is-invalid" id="usersName" placeholder="name">
-            <div class="invalid-feedback">
-              <?php echo $nameErr ;?>
-            </div>
-          <?php else: ?>
-            <input type="text" name="usersName" class="col-sm-3 form-control is-valid" id="usersName" placeholder="name">
-          <?php endif; ?>
-				</div>
+  				<div class="form-group col-md-4">
+  					<label for="usersName">Name</label>
+            <?php if(isset($nameErr)) : ?>
+        			<input type="text" name="usersName" class="form-control is-invalid" id="usersName" placeholder="name">
+              <div class="invalid-feedback">
+                <?php echo $nameErr ;?>
+              </div>
+            <?php else: ?>
+              <input type="text" name="usersName" class="form-control is-valid" id="usersName" placeholder="name">
+            <?php endif; ?>
+  				</div>
 
-				<div class="form-group">
-					<label for="usersEmail">Email</label>
-          <?php if(isset($emailErr)) : ?>
-    			  <input type="email" name="usersEmail" class="col-sm-3 form-control is-invalid" id="usersEmail" placeholder="email">
-            <div class="invalid-feedback">
-              <?php echo $emailErr ;?>
-            </div>
-          <?php else : ?>
-            <input type="email" name="usersEmail" class="col-sm-3 form-control is-valid" id="usersEmail" placeholder="email">
-          <?php endif ; ?>
-				</div>
+  				<div class="form-group col-md-4">
+  					<label for="usersEmail">Email</label>
+            <?php if(isset($emailErr)) : ?>
+      			  <input type="email" name="usersEmail" class="form-control is-invalid" id="usersEmail" placeholder="email">
+              <div class="invalid-feedback">
+                <?php echo $emailErr ;?>
+              </div>
+            <?php else : ?>
+              <input type="email" name="usersEmail" class="form-control is-valid" id="usersEmail" placeholder="email">
+            <?php endif ; ?>
+  				</div>
 
-				<div class="form-group">
-					<label for="usersAddress">Address</label>
-          <?php if(isset($addressErr)) : ?>
-    			  <input type="text" name="usersAddress" class="col-sm-3 form-control is-invalid" id="usersAddress" placeholder="address">
-            <div class="invalid-feedback">
-              <?php echo $addressErr ;?>
-            </div>
-          <?php else : ?>
-            <input type="text" name="usersAddress" class="col-sm-3 form-control is-valid" id="usersAddress" placeholder="address">
-          <?php endif ; ?>
-				</div>
-
-				<div class="form-group">
-					<label for="usersCity">City</label>
-          <?php if(isset($cityErr)) : ?>
-    			  <input type="text" name="usersCity" class="col-sm-2 form-control is-invalid" id="usersCity" placeholder="city">
-            <div class="invalid-feedback">
-              <?php echo $cityErr;?>
-            </div>
-          <?php else : ?>
-            <input type="text" name="usersCity" class="col-sm-2 form-control is-valid" id="usersCity" placeholder="city">
-          <?php endif ;?>
+        </div>
+        <div class="form-row justify-content-center">
+  				<div class="form-group col-md-8">
+  					<label for="usersAddress">Address</label>
+            <?php if(isset($addressErr)) : ?>
+      			  <input type="text" name="usersAddress" class="form-control is-invalid" id="usersAddress" placeholder="address">
+              <div class="invalid-feedback">
+                <?php echo $addressErr ;?>
+              </div>
+            <?php else : ?>
+              <input type="text" name="usersAddress" class="form-control is-valid" id="usersAddress" placeholder="address">
+            <?php endif ; ?>
+  				</div>
         </div>
 
-				<div class="form-group">
-					<label for="usersState">State</label>
-          <?php if(isset($stateErr)) : ?>
-					  <select name="usersState" class="col-sm-1 form-control is-invalid" id="usersState">
-          <?php else : ?>
-            <select name="usersState" class="col-sm-1 form-control is-valid" id="usersState">
-          <?php endif;?>
-						<option value="AL">Alabama</option>
-						<option value="AK">Alaska</option>
-						<option value="AZ">Arizona</option>
-						<option value="AR">Arkansas</option>
-						<option value="CA">California</option>
-						<option value="CO">Colorado</option>
-						<option value="CT">Connecticut</option>
-						<option value="DE">Delaware</option>
-						<option value="DC">District Of Columbia</option>
-						<option value="FL">Florida</option>
-						<option value="GA">Georgia</option>
-						<option value="HI">Hawaii</option>
-						<option value="ID">Idaho</option>
-						<option value="IL">Illinois</option>
-						<option value="IN">Indiana</option>
-						<option value="IA">Iowa</option>
-						<option value="KS">Kansas</option>
-						<option value="KY">Kentucky</option>
-						<option value="LA">Louisiana</option>
-						<option value="ME">Maine</option>
-						<option value="MD">Maryland</option>
-						<option value="MA">Massachusetts</option>
-						<option value="MI">Michigan</option>
-						<option value="MN">Minnesota</option>
-						<option value="MS">Mississippi</option>
-						<option value="MO">Missouri</option>
-						<option value="MT">Montana</option>
-						<option value="NE">Nebraska</option>
-						<option value="NV">Nevada</option>
-						<option value="NH">New Hampshire</option>
-						<option value="NJ">New Jersey</option>
-						<option value="NM">New Mexico</option>
-						<option value="NY">New York</option>
-						<option value="NC">North Carolina</option>
-						<option value="ND">North Dakota</option>
-						<option value="OH">Ohio</option>
-						<option value="OK">Oklahoma</option>
-						<option value="OR">Oregon</option>
-						<option value="PA">Pennsylvania</option>
-						<option value="RI">Rhode Island</option>
-						<option value="SC">South Carolina</option>
-						<option value="SD">South Dakota</option>
-						<option value="TN">Tennessee</option>
-						<option value="TX">Texas</option>
-						<option value="UT">Utah</option>
-						<option value="VT">Vermont</option>
-						<option value="VA">Virginia</option>
-						<option value="WA">Washington</option>
-						<option value="WV">West Virginia</option>
-						<option value="WI">Wisconsin</option>
-						<option value="WY">Wyoming</option>
-					</select>
-          <?php if(isset($stateErr)) : ?>
-            <div class="invalid-feedback">
-              <?php echo $stateErr ;?>
-            </div>
-          <?php endif;?>
-				</div>
+        <div class = "form-row justify-content-center">
+  				<div class="form-group col-md-4">
+  					<label for="usersCity">City</label>
+            <?php if(isset($cityErr)) : ?>
+      			  <input type="text" name="usersCity" class="form-control is-invalid" id="usersCity" placeholder="city">
+              <div class="invalid-feedback">
+                <?php echo $cityErr;?>
+              </div>
+            <?php else : ?>
+              <input type="text" name="usersCity" class="form-control is-valid" id="usersCity" placeholder="city">
+            <?php endif ;?>
+          </div>
 
-				<div class="form-group">
-					<label for="usersZip">Zip Code</label>
-          <?php if(isset($zipErr)) : ?>
-    			  <input type="text" name="usersZip" class="col-sm-1 form-control is-invalid" id="usersZip" placeholder="zip code">
-            <div class="invalid-feedback">
-              <?php echo $zipErr ;?>
-            </div>
-          <?php else : ?>
-            <input type="text" name="usersZip" class="col-sm-1 form-control is-valid" id="usersZip" placeholder="zip code">
-          <?php endif;?>
-				</div>
+  				<div class="form-group col-md-2">
+  					<label for="usersState">State</label>
+            <?php if(isset($stateErr)) : ?>
+  					  <select name="usersState" class="form-control is-invalid" id="usersState">
+            <?php else : ?>
+              <select name="usersState" class="form-control is-valid" id="usersState">
+            <?php endif;?>
+  						<option value="AL">Alabama</option>
+  						<option value="AK">Alaska</option>
+  						<option value="AZ">Arizona</option>
+  						<option value="AR">Arkansas</option>
+  						<option value="CA">California</option>
+  						<option value="CO">Colorado</option>
+  						<option value="CT">Connecticut</option>
+  						<option value="DE">Delaware</option>
+  						<option value="DC">District Of Columbia</option>
+  						<option value="FL">Florida</option>
+  						<option value="GA">Georgia</option>
+  						<option value="HI">Hawaii</option>
+  						<option value="ID">Idaho</option>
+  						<option value="IL">Illinois</option>
+  						<option value="IN">Indiana</option>
+  						<option value="IA">Iowa</option>
+  						<option value="KS">Kansas</option>
+  						<option value="KY">Kentucky</option>
+  						<option value="LA">Louisiana</option>
+  						<option value="ME">Maine</option>
+  						<option value="MD">Maryland</option>
+  						<option value="MA">Massachusetts</option>
+  						<option value="MI">Michigan</option>
+  						<option value="MN">Minnesota</option>
+  						<option value="MS">Mississippi</option>
+  						<option value="MO">Missouri</option>
+  						<option value="MT">Montana</option>
+  						<option value="NE">Nebraska</option>
+  						<option value="NV">Nevada</option>
+  						<option value="NH">New Hampshire</option>
+  						<option value="NJ">New Jersey</option>
+  						<option value="NM">New Mexico</option>
+  						<option value="NY">New York</option>
+  						<option value="NC">North Carolina</option>
+  						<option value="ND">North Dakota</option>
+  						<option value="OH">Ohio</option>
+  						<option value="OK">Oklahoma</option>
+  						<option value="OR">Oregon</option>
+  						<option value="PA">Pennsylvania</option>
+  						<option value="RI">Rhode Island</option>
+  						<option value="SC">South Carolina</option>
+  						<option value="SD">South Dakota</option>
+  						<option value="TN">Tennessee</option>
+  						<option value="TX">Texas</option>
+  						<option value="UT">Utah</option>
+  						<option value="VT">Vermont</option>
+  						<option value="VA">Virginia</option>
+  						<option value="WA">Washington</option>
+  						<option value="WV">West Virginia</option>
+  						<option value="WI">Wisconsin</option>
+  						<option value="WY">Wyoming</option>
+  					</select>
+            <?php if(isset($stateErr)) : ?>
+              <div class="invalid-feedback">
+                <?php echo $stateErr ;?>
+              </div>
+            <?php endif;?>
+  				</div>
 
-				<div class="form-group">
-					<label for="usersPwd">Password</label>
-          <?php if(isset($pwdErr)) :?>
-    			  <input type="password" name="usersPwd" class="col-sm-3 form-control is-invalid" id="usersPwd" placeholder="password">
-            <div class="invalid-feedback">
-              <?php echo $pwdErr ;?>
-            </div>
-          <?php else : ?>
-            <input type="password" name="usersPwd" class="col-sm-3 form-control is-valid" id="usersPwd" placeholder="password">
-          <?php endif ;?>
+  				<div class="form-group col-md-2">
+  					<label for="usersZip">Zip Code</label>
+            <?php if(isset($zipErr)) : ?>
+      			  <input type="text" name="usersZip" class="form-control is-invalid" id="usersZip" placeholder="zip code">
+              <div class="invalid-feedback">
+                <?php echo $zipErr ;?>
+              </div>
+            <?php else : ?>
+              <input type="text" name="usersZip" class="form-control is-valid" id="usersZip" placeholder="zip code">
+            <?php endif;?>
+  				</div>
         </div>
 
-				<div class="form-group">
-					<label for="usersPwdConfirm">Confirm Password</label>
-          <?php if(isset($pwdConfirmErr)) :?>
-    			  <input type="password" name="usersPwdConfirm" class="col-sm-3 form-control is-invalid" id="usersPwdConfirm" placeholder="password">
-            <div class="invalid-feedback">
-              <?php echo $pwdConfirmErr ;?>
-            </div>
-          <?php else : ?>
-             <input type="password" name="usersPwdConfirm" class="col-sm-3 form-control is-valid" id="usersPwdConfirm" placeholder="password">
-          <?php endif ;?>
-				</div>
+        <div class="form-row justify-content-center">
+  				<div class="form-group col-md-4">
+  					<label for="usersPwd">Password</label>
+            <?php if(isset($pwdErr)) :?>
+      			  <input type="password" name="usersPwd" class="form-control is-invalid" id="usersPwd" placeholder="password">
+              <div class="invalid-feedback">
+                <?php echo $pwdErr ;?>
+              </div>
+            <?php else : ?>
+              <input type="password" name="usersPwd" class="form-control is-valid" id="usersPwd" placeholder="password">
+            <?php endif ;?>
+          </div>
 
-				<button type="submit" class="btn btn-primary">Submit</button>
-
+  				<div class="form-group col-md-4">
+  					<label for="usersPwdConfirm">Confirm Password</label>
+            <?php if(isset($pwdConfirmErr)) :?>
+      			  <input type="password" name="usersPwdConfirm" class="form-control is-invalid" id="usersPwdConfirm" placeholder="password">
+              <div class="invalid-feedback">
+                <?php echo $pwdConfirmErr ;?>
+              </div>
+            <?php else : ?>
+               <input type="password" name="usersPwdConfirm" class="form-control is-valid" id="usersPwdConfirm" placeholder="password">
+            <?php endif ;?>
+  				</div>
+        </div>
+        <div class="form-row justify-content-center">
+				<button type="submit" class="btn btn-primary btn-lg">Submit</button>
+      </div>
 			</form>
 		</div>
 
+  </body>
+
+  <footer>
     <nav class="navbar navbar-light bg-light">
   		<a class="nav-item nav-link" href="index.html"><i class="fas fa-camera-retro fa-2x">PhotoGo</i></a>
 		</nav>
-
-  </body>
+  </footer>
 </html>
