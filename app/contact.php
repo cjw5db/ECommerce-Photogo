@@ -45,7 +45,7 @@
             $anyErr = TRUE;
         }
 
-        if(!anyErr){
+       // if(!anyErr){
         //email part
         //Load Composer's autoloader
 
@@ -65,10 +65,9 @@
         //$mail->msgHTML(file_get_contents('contents.html'), __DIR__);
         //Replace the plain text body with one created manually
         $mail->AltBody = $fields["message"].$fields["name"].$fields["email"];
-        }
         
         //send the message, check for errors
-        else if (!$mail->send()) {
+        if (!$mail->send()) {
             echo "Mailer Error: " . $mail->ErrorInfo;
         } else {
             echo "Message sent!";
