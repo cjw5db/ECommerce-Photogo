@@ -34,7 +34,30 @@ $picPath = "images/fulls/".$_GET['id'].".jpg";
           <img src=<?php echo $picPath ?> class="rounded mr-3" style="width:640px;height:480px;">
           <div class="media-body">
             <h5 class="mt-0">Media heading</h5>
-            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+            <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</p>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#purchaseModal">
+              Purchase
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="purchaseModal" tabindex="-1" role="dialog" aria-labelledby="Purchase" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modalLabel">Purchase</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              By clicking purchase, you will receive a bitcoin invoice via your account email.  It will expire in 15 minutes.
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Purchase</button>
+            </div>
           </div>
         </div>
       </div>
