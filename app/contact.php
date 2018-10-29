@@ -68,7 +68,7 @@
         }
         
         //send the message, check for errors
-        if (!$mail->send()) {
+        else if (!$mail->send()) {
             echo "Mailer Error: " . $mail->ErrorInfo;
         } else {
             echo "Message sent!";
