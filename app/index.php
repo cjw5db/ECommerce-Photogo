@@ -1,9 +1,11 @@
+<?php
+	session_start();
+	echo $_SESSION['email'];
+ ?>
+
+
+
 <!DOCTYPE HTML>
-<!--
-	Lens by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
 <html>
 	<head>
 		<title>PhotoGo</title>
@@ -36,7 +38,7 @@
 		<div class="container">
 			<div class="card-columns">
 				<div class="card">
-					<img class="card-img-top" src="images/fulls/01.jpg">
+					<img class="card-img-top" src="images/fulls/1.jpg">
 					<div class="card-body">
 						<h5 class="card-title">Young Prospect</h5>
 	      		<p class="card-text">Jonathan loves working with families and photographing sports</p>
@@ -45,11 +47,11 @@
 						</footer>
 					</div>
 					<div class="card-footer text-center">
-						<a href="detail.php?id=01" class="btn btn-primary text-center">View</a>
+						<a href="detail.php?id=1" class="btn btn-primary text-center">View</a>
 					</div>
 				</div>
 				<div class="card">
-					<img class="card-img-top" src="images/fulls/02.jpg">
+					<img class="card-img-top" src="images/fulls/2.jpg">
 					<div class="card-body">
 						<h5 class="card-title">Wedding Photo</h5>
 	      		<p class="card-text">Christina loves taking wedding photos in the fall</p>
@@ -58,11 +60,11 @@
 						</footer>
 					</div>
 					<div class="card-footer text-center">
-						<a href="detail.php?id=02" class="btn btn-primary text-center">View</a>
+						<a href="detail.php?id=2" class="btn btn-primary text-center">View</a>
 					</div>
 				</div>
 				<div class="card">
-					<img class="card-img-top" src="images/fulls/03.jpg">
+					<img class="card-img-top" src="images/fulls/3.jpg">
 					<div class="card-body">
 						<h5 class="card-title">Statue of Liberty</h5>
 	      		<p class="card-text">Harry has a passion for architecture and loves the New York SKyline</p>
@@ -71,11 +73,11 @@
 						</footer>
 					</div>
 					<div class="card-footer text-center">
-						<a href="detail.php?id=03" class="btn btn-primary text-center">View</a>
+						<a href="detail.php?id=3" class="btn btn-primary text-center">View</a>
 					</div>
 				</div>
 				<div class="card">
-					<img class="card-img-top" src="images/fulls/04.jpg">
+					<img class="card-img-top" src="images/fulls/4.jpg">
 					<div class="card-body">
 						<h5 class="card-title">Jungle Action Shot</h5>
 	      		<p class="card-text">Gina explores wild areas to catch pictures of the wildlife</p>
@@ -84,11 +86,11 @@
 						</footer>
 					</div>
 					<div class="card-footer text-center">
-						<a href="detail.php?id=04" class="btn btn-primary text-center">View</a>
+						<a href="detail.php?id=4" class="btn btn-primary text-center">View</a>
 					</div>
 				</div>
 				<div class="card">
-					<img class="card-img-top" src="images/fulls/05.jpg">
+					<img class="card-img-top" src="images/fulls/5.jpg">
 					<div class="card-body">
 						<h5 class="card-title">Pyramid of Giza</h5>
 	      		<p class="card-text">Gage tries to take pictures of different cultures</p>
@@ -97,11 +99,11 @@
 						</footer>
 					</div>
 					<div class="card-footer text-center">
-						<a href="detail.php?id=05" class="btn btn-primary text-center">View</a>
+						<a href="detail.php?id=5" class="btn btn-primary text-center">View</a>
 					</div>
 				</div>
 				<div class="card">
-					<img class="card-img-top" src="images/fulls/06.jpg">
+					<img class="card-img-top" src="images/fulls/6.jpg">
 					<div class="card-body">
 						<h5 class="card-title">Winning Shot</h5>
 	      		<p class="card-text">James exclusively photographs professional athletes</p>
@@ -110,11 +112,11 @@
 						</footer>
 					</div>
 					<div class="card-footer text-center">
-						<a href="detail.php?id=06" class="btn btn-primary text-center">View</a>
+						<a href="detail.php?id=6" class="btn btn-primary text-center">View</a>
 					</div>
 				</div>
 				<div class="card">
-					<img class="card-img-top" src="images/fulls/07.jpg">
+					<img class="card-img-top" src="images/fulls/7.jpg">
 					<div class="card-body">
 						<h5 class="card-title">Red Hot Chili Peppers Live at Cardinal Hall</h5>
 	      		<p class="card-text">Megan spends her time taking photos of different bands in the Atlanta area</p>
@@ -123,11 +125,11 @@
 						</footer>
 					</div>
 					<div class="card-footer text-center">
-						<a href="detail.php?id=07" class="btn btn-primary text-center">View</a>
+						<a href="detail.php?id=7" class="btn btn-primary text-center">View</a>
 					</div>
 				</div>
 				<div class="card">
-					<img class="card-img-top" src="images/fulls/08.jpg">
+					<img class="card-img-top" src="images/fulls/8.jpg">
 					<div class="card-body">
 						<h5 class="card-title">Bethany Beach Waves</h5>
 	      		<p class="card-text">Ever since he was young, Tyler loved the ocean</p>
@@ -136,11 +138,11 @@
 						</footer>
 					</div>
 					<div class="card-footer text-center">
-						<a href="detail.php?id=08" class="btn btn-primary text-center">View</a>
+						<a href="detail.php?id=8" class="btn btn-primary text-center">View</a>
 					</div>
 				</div>
 				<div class="card">
-					<img class="card-img-top" src="images/fulls/09.jpg">
+					<img class="card-img-top" src="images/fulls/9.jpg">
 					<div class="card-body">
 						<h5 class="card-title">Peaceful Plains</h5>
 	      		<p class="card-text">Nick lives in the Mid West and loves the rolling hills</p>
@@ -149,7 +151,7 @@
 						</footer>
 					</div>
 					<div class="card-footer text-center">
-						<a href="detail.php?id=09" class="btn btn-primary text-center">View</a>
+						<a href="detail.php?id=9" class="btn btn-primary text-center">View</a>
 					</div>
 				</div>
 				<div class="card">

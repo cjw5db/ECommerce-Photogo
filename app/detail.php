@@ -1,7 +1,10 @@
 <?php
-
-$picPath = "images/fulls/".$_GET['id'].".jpg";
-
+  $picPath = "images/fulls/".$_GET['id'].".jpg";
+  include('get_db_connection.php');
+  $result = pg_query_params($db, "SELECT * FROM product WHERE id = $1", array($_GET['id']));
+  if (pg_num_rows($result) != 0){
+    $price = pg_fetch_result($result, 0, 'price');
+  }
 ?>
 
 <html>
@@ -33,11 +36,21 @@ $picPath = "images/fulls/".$_GET['id'].".jpg";
         <div class="media">
           <img src=<?php echo $picPath ?> class="rounded mr-3" style="width:640px;height:480px;">
           <div class="media-body">
-            <h5 class="mt-0">Media heading</h5>
-            <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</p>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#purchaseModal">
-              Purchase
-            </button>
+
+            <div class="card">
+    					<div class="card-body">
+    						<h5 class="card-title"><?php echo pg_fetch_result($result, 0, 'title')?></h5>
+    	      		<p class="card-text"><?php echo pg_fetch_result($result, 0, 'description')?></p>
+    	      		<footer class="blockquote-footer text-right">
+    							<small class="text-muted"><?php echo pg_fetch_result($result, 0, 'photographer')?></small>
+    						</footer>
+    					</div>
+    					<div class="card-footer text-center">
+                <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#purchaseModal">
+                  Purchase - <i class="fab fa-bitcoin"></i><?php echo pg_fetch_result($result, 0, 'price')?>
+                </button>
+    					</div>
+    				</div>
           </div>
         </div>
       </div>
@@ -56,7 +69,7 @@ $picPath = "images/fulls/".$_GET['id'].".jpg";
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Purchase</button>
+              <a role="button" class="btn btn-primary" href="transaction.php">Purchase</a>
             </div>
           </div>
         </div>

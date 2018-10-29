@@ -1,8 +1,28 @@
 <?php
+	$emailErr = $pwdErr = NULL;
+
 	if ($_SERVER["REQUEST_METHOD"] == "POST"){
+
 		include('get_db_connection.php');
-		$result = pg_query_params($db, "SELECT email FROM users WHERE email = $1", array($_POST['usersEmail']));
-		echo $result;
+		$email = htmlspecialchars($_POST{'usersEmail'});
+		$password = htmlspecialchars($_POST['usersPwd']);
+
+		$result = pg_query_params($db, "SELECT * FROM users WHERE email = $1", array($email));
+		if (pg_num_rows($result) != 0){
+			if(password_verify($password, pg_fetch_result($result, 0, 'passwordhash'))){
+				session_start();
+				$_SESSION['email'] = $email;
+				$_SESSION['logged_in'] = TRUE;
+				header('Location: index.php');
+				exit();
+			}
+			else{
+				$pwdErr = "Incorrect password";
+			}
+		}
+		else{
+			$emailErr = "Email not found";
+		}
 	}
  ?>
 
@@ -39,12 +59,26 @@
 				<form action='<?php htmlspecialchars($_SERVER["PHP_SELF"]);?>' method="post" role="form">
 					<div class="form-row justify-content-center">
 						<div class="form-group col-md-3">
-		    			<input type="email" class="form-control" id="usersEmail" placeholder="Email">
+							<?php if(isset($emailErr)) : ?>
+			    			<input type="email" class="form-control is-invalid" name="usersEmail" id="usersEmail" placeholder="Email">
+								<div class="invalid-feedback">
+									<?php echo $emailErr;?>
+								</div>
+							<?php else : ?>
+								<input type="email" class="form-control is-valid" name="usersEmail" id="usersEmail" placeholder="Email">
+							<?php endif ; ?>
 						</div>
 					</div>
 					<div class="form-row justify-content-center">
 						<div class="form-group col-md-3">
-		    			<input type="password" class="form-control" id="usersPwd" placeholder="Password">
+							<?php if(isset($pwdErr)) : ?>
+			    			<input type="password" class="form-control is-invalid" name="usersPwd" id="usersPwd" placeholder="Password">
+								<div class="invalid-feedback">
+									<?php echo $pwdErr ;?>
+								</div>
+							<?php else : ?>
+								<input type="password" class="form-control is-valid" name="usersPwd" id="usersPwd" placeholder="Password">
+							<?php endif ; ?>
 						</div>
 					</div>
 					<div class="form-row justify-content-center">
