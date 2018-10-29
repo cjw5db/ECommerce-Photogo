@@ -1,13 +1,5 @@
 <?php
-  foreach (glob("../vendor/bitpay/php-client/src/Bitpay/*.php") as $filename)
-  {
-    include $filename;
-  }
-  // require_once('../vendor/bitpay/php-client/src/Bitpay/PrivateKey.php');
-  // require_once('../vendor/bitpay/php-client/src/Bitpay/PublicKey.php');
-  // require_once('../vendor/bitpay/php-client/src/Bitpay/Key.php');
-  $privateKey = new PrivateKey('/tmp/bitpay.pri');
-  $privateKey->generate();
+
 
   $ch = curl_init();
   $fields = [
