@@ -106,7 +106,7 @@
 		</div>
 
 		<div class="container">
-			<form>
+			<form action='<?php htmlspecialchars($_SERVER["PHP_SELF"]);?>' method='post' role="form">
 				<div class="form-row justify-content-center">
 					<div class="form-group col-md-4">
 						<input type="text" name="usersName" class="form-control form-control" id="usersName" placeholder="Name">
