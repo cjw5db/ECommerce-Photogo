@@ -45,6 +45,7 @@
             $anyErr = TRUE;
         }
 
+        if(!anyErr){
         //email part
         //Load Composer's autoloader
 
@@ -55,7 +56,7 @@
         //Set an alternative reply-to address
         $mail->addReplyTo('PhotoGoECommerce@outlook.com', 'Photo Go');
         //Set who the message is to be sent to
-        $mail->addAddress('PhotoGoECommerce@outlook.com', 'Photo Go');
+        $mail->addAddress('PhotoGoECommerce@outlook.com');
         //Set the subject line
         $mail->Subject = 'Contact Us Page has been activated by a User';
         $mail->Body = $fields["message"].$fields["name"].$fields["email"];
@@ -64,7 +65,7 @@
         //$mail->msgHTML(file_get_contents('contents.html'), __DIR__);
         //Replace the plain text body with one created manually
         $mail->AltBody = $fields["message"].$fields["name"].$fields["email"];
-        
+        }
         
         //send the message, check for errors
         if (!$mail->send()) {
