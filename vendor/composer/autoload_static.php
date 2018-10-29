@@ -6,54 +6,18 @@ namespace Composer\Autoload;
 
 class ComposerStaticIniteac7c915d1aabdbc6b96f372bc08ad58
 {
-    public static $files = array (
-        '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
-    );
-
     public static $prefixLengthsPsr4 = array (
-        'S' => 
-        array (
-            'Symfony\\Polyfill\\Ctype\\' => 23,
-            'Symfony\\Component\\Filesystem\\' => 29,
-            'Symfony\\Component\\DependencyInjection\\' => 38,
-            'Symfony\\Component\\Config\\' => 25,
-        ),
         'P' => 
         array (
-            'Psr\\Container\\' => 14,
             'PHPMailer\\PHPMailer\\' => 20,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'Symfony\\Polyfill\\Ctype\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/symfony/polyfill-ctype',
-        ),
-        'Symfony\\Component\\Filesystem\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/symfony/filesystem',
-        ),
-        'Symfony\\Component\\DependencyInjection\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/symfony/dependency-injection',
-        ),
-        'Symfony\\Component\\Config\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/symfony/config',
-        ),
-        'Psr\\Container\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/psr/container/src',
-        ),
         'PHPMailer\\PHPMailer\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
         ),
-    );
-
-    public static $fallbackDirsPsr4 = array (
-        0 => __DIR__ . '/..' . '/bitpay/php-client/src',
     );
 
     public static function getInitializer(ClassLoader $loader)
@@ -61,7 +25,6 @@ class ComposerStaticIniteac7c915d1aabdbc6b96f372bc08ad58
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticIniteac7c915d1aabdbc6b96f372bc08ad58::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticIniteac7c915d1aabdbc6b96f372bc08ad58::$prefixDirsPsr4;
-            $loader->fallbackDirsPsr4 = ComposerStaticIniteac7c915d1aabdbc6b96f372bc08ad58::$fallbackDirsPsr4;
 
         }, null, ClassLoader::class);
     }
