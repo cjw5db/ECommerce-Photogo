@@ -51,6 +51,16 @@
 
         //Create a new PHPMailer instance
         $mail = new PHPMailer;
+        $outlook = 'PhotoGoECommerce@outlook.com';
+        $pwd = 'photogo2018!';
+        $host = 'smtp-mail.outlook.com';
+        
+        $mail->IsSMTP();
+        $mail->Host = $host;
+        $mail->SMTPAuth = TRUE;
+        $mail->Username = $outlook;
+        $mail->Password = $pwd;
+        $mail->Port=587;
         //Set who the message is to be sent from
         $mail->setFrom('PhotoGoECommerce@outlook.com', 'Photo Go');
         //Set an alternative reply-to address
