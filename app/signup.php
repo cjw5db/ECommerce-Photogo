@@ -155,23 +155,21 @@
 	<body>
     <header>
       <nav class="navbar navbar-expand-lg navbar-light">
-  			<a class="nav-item nav-link" href="index.html"><i class="fas fa-camera-retro fa-2x">PhotoGo</i></a>
-  	    <div class="navbar-nav">
-  	      <a class="nav-item nav-link" href="about.html" style="border:none">About Us</a>
-  	      <a class="nav-item nav-link" href="contact.html" style="border:none">Contact Us</a>
-  	      <a class="nav-item nav-link" href="login.html" style="border:none">Login</a>
-  				<a class="nav-item nav-link" href="signup.php" style="border:none">Sign Up</a>
-  	    </div>
-  		</nav>
-		</header>
-
+        <a class="nav-item nav-link" href="index.html"><i class="fas fa-camera-retro fa-2x">PhotoGo</i></a>
+        <div class="navbar-nav">
+          <a class="nav-item nav-link" href="about.html" style="border:none">About Us</a>
+          <a class="nav-item nav-link" href="contact.html" style="border:none">Contact Us</a>
+          <a class="nav-item nav-link" href="login.html" style="border:none">Login</a>
+          <a class="nav-item nav-link" href="signup.php" style="border:none">Sign Up</a>
+        </div>
+      </nav>
+    </header>
 
     <div class="jumbotron text-center">
       <h1>Sign Up</h1>
     </div>
 
     <div class="container">
-
 			<form action='<?php htmlspecialchars($_SERVER["PHP_SELF"]);?>' method='post' role="form">
         <div class="form-row justify-content-center">
 
@@ -337,11 +335,10 @@
 			</form>
 		</div>
 
+    <footer>
+      <nav class="navbar navbar-light bg-light">
+        <a class="nav-item nav-link" href="index.html"><i class="fas fa-camera-retro fa-2x">PhotoGo</i></a>
+      </nav>
+    </footer>
   </body>
-
-  <footer>
-    <nav class="navbar navbar-light bg-light">
-  		<a class="nav-item nav-link" href="index.html"><i class="fas fa-camera-retro fa-2x">PhotoGo</i></a>
-		</nav>
-  </footer>
 </html>
