@@ -12,11 +12,11 @@
 	<body>
 		<header>
 			<nav class="navbar navbar-expand-lg navbar-light">
-				<a class="nav-item nav-link" href="index.html"><i class="fas fa-camera-retro fa-2x">PhotoGo</i></a>
+				<a class="nav-item nav-link" href="index.php"><i class="fas fa-camera-retro fa-2x">PhotoGo</i></a>
 				<div class="navbar-nav">
-					<a class="nav-item nav-link" href="about.html" style="border:none">About Us</a>
-					<a class="nav-item nav-link" href="contact.html" style="border:none">Contact Us</a>
-					<a class="nav-item nav-link" href="login.html" style="border:none">Login</a>
+					<a class="nav-item nav-link" href="about.php" style="border:none">About Us</a>
+					<a class="nav-item nav-link" href="contact.php" style="border:none">Contact Us</a>
+					<a class="nav-item nav-link" href="login.php" style="border:none">Login</a>
 					<a class="nav-item nav-link" href="signup.php" style="border:none">Sign Up</a>
 				</div>
 			</nav>
@@ -55,7 +55,7 @@
 
 		<footer>
 			<nav class="navbar navbar-light bg-light fixed-bottom">
-				<a class="nav-item nav-link" href="index.html"><i class="fas fa-camera-retro fa-2x">PhotoGo</i></a>
+				<a class="nav-item nav-link" href="index.php"><i class="fas fa-camera-retro fa-2x">PhotoGo</i></a>
 			</nav>
 		</footer>
   </body>

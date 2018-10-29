@@ -12,11 +12,11 @@
 	<body>
 		<header>
 			<nav class="navbar navbar-expand-lg navbar-light">
-				<a class="nav-item nav-link" href="index.html"><i class="fas fa-camera-retro fa-2x">PhotoGo</i></a>
+				<a class="nav-item nav-link" href="index.php"><i class="fas fa-camera-retro fa-2x">PhotoGo</i></a>
 				<div class="navbar-nav">
-					<a class="nav-item nav-link" href="about.html" style="border:none">About Us</a>
-					<a class="nav-item nav-link" href="contact.html" style="border:none">Contact Us</a>
-					<a class="nav-item nav-link" href="login.html" style="border:none">Login</a>
+					<a class="nav-item nav-link" href="about.php" style="border:none">About Us</a>
+					<a class="nav-item nav-link" href="contact.php" style="border:none">Contact Us</a>
+					<a class="nav-item nav-link" href="login.php" style="border:none">Login</a>
 					<a class="nav-item nav-link" href="signup.php" style="border:none">Sign Up</a>
 				</div>
 			</nav>
@@ -27,7 +27,7 @@
 		</div>
 
 		<div class="container">
-			
+
 			<h3>Product/Services</h3>
 			<p> Photogo is a marketplace for photographers.  Photographers are able to post and sell their photos online, where general users are able to view, purchase, and download various sizes of the image directly from the site. In addition, if a buyer finds that they like a particular photographers skills, then they can reach out to the photographer to hire their services.</p> </br>
 			<p> PhotoGo makes it easy to advertise and sell for photographers and also gives new artists a platform to post their photos and gain some recognition in the photography business.  The site is meant to be focused on the photographers and their work. </p>
@@ -42,7 +42,7 @@
 
 		<footer>
 			<nav class="navbar navbar-light bg-light">
-				<a class="nav-item nav-link" href="index.html"><i class="fas fa-camera-retro fa-2x">PhotoGo</i></a>
+				<a class="nav-item nav-link" href="index.php"><i class="fas fa-camera-retro fa-2x">PhotoGo</i></a>
 			</nav>
 		</footer>
   </body>

@@ -1,3 +1,11 @@
+<?php
+	if ($_SERVER["REQUEST_METHOD"] == "POST"){
+		include('get_db_connection.php');
+		$result = pg_query_params($db, "SELECT email FROM users WHERE email = $1", array($_POST['usersEmail']));
+		echo $result;
+	}
+ ?>
+
 <html>
 	<head>
 		<title>PhotoGo</title>
@@ -12,11 +20,11 @@
 	<body>
 		<header>
 			<nav class="navbar navbar-expand-lg navbar-light">
-				<a class="nav-item nav-link" href="index.html"><i class="fas fa-camera-retro fa-2x">PhotoGo</i></a>
+				<a class="nav-item nav-link" href="index.php"><i class="fas fa-camera-retro fa-2x">PhotoGo</i></a>
 				<div class="navbar-nav">
-					<a class="nav-item nav-link" href="about.html" style="border:none">About Us</a>
-					<a class="nav-item nav-link" href="contact.html" style="border:none">Contact Us</a>
-					<a class="nav-item nav-link" href="login.html" style="border:none">Login</a>
+					<a class="nav-item nav-link" href="about.php" style="border:none">About Us</a>
+					<a class="nav-item nav-link" href="contact.php" style="border:none">Contact Us</a>
+					<a class="nav-item nav-link" href="login.php" style="border:none">Login</a>
 					<a class="nav-item nav-link" href="signup.php" style="border:none">Sign Up</a>
 				</div>
 			</nav>
@@ -28,27 +36,27 @@
 
 		<div class="container">
 			<div class="text-center">
-				<form>
+				<form action='<?php htmlspecialchars($_SERVER["PHP_SELF"]);?>' method="post" role="form">
 					<div class="form-row justify-content-center">
 						<div class="form-group col-md-3">
 		    			<input type="email" class="form-control" id="usersEmail" placeholder="Email">
 						</div>
-				</div>
-				<div class="form-row justify-content-center">
-					<div class="form-group col-md-3">
-	    			<input type="password" class="form-control" id="usersPwd" placeholder="Password">
 					</div>
-				</div>
-				<div class="form-row justify-content-center">
-					<button type="submit" class="btn btn-primary btn-lg">Log In</button>
-				</div>
+					<div class="form-row justify-content-center">
+						<div class="form-group col-md-3">
+		    			<input type="password" class="form-control" id="usersPwd" placeholder="Password">
+						</div>
+					</div>
+					<div class="form-row justify-content-center">
+						<button type="submit" class="btn btn-primary btn-lg">Log In</button>
+					</div>
 				</form>
 	    </div>
 		</div>
 
 		<footer>
 			<nav class="navbar navbar-light bg-light fixed-bottom">
-				<a class="nav-item nav-link" href="index.html"><i class="fas fa-camera-retro fa-2x">PhotoGo</i></a>
+				<a class="nav-item nav-link" href="index.php"><i class="fas fa-camera-retro fa-2x">PhotoGo</i></a>
 			</nav>
 		</footer>
   </body>
