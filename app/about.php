@@ -21,9 +21,11 @@
 					<a class="nav-item nav-link" href="about.php" style="border:none">About Us</a>
 					<a class="nav-item nav-link" href="contact.php" style="border:none">Contact Us</a>
 					<?php if(empty($_SESSION['logged_in'])) : ?>
-					<a class="nav-item nav-link" href="login.php" style="border:none">Login</a>
-					<a class="nav-item nav-link" href="signup.php" style="border:none">Sign Up</a>
-					<?php endif ;?>
+						<a class="nav-item nav-link" href="login.php" style="border:none">Login</a>
+						<a class="nav-item nav-link" href="signup.php" style="border:none">Sign Up</a>
+					<?php else :?>
+						<a class="btn btn-primary" href="log_out.php">Log Out</a>
+					<?php endif;?>
 				</div>
 			</nav>
 		</header>
@@ -41,9 +43,11 @@
 			<h3>Why PhotoGo? </h3>
 			<p> Currently there is a lack of marketability for photographer’s skills and their products.  There is no current way for them to sell ALL that they have to offer, which includes both their portfolio of personally taken photos and their contractible services.  There of course exist websites to buy photos as well as websites to hire contractible workers, but none that do both. </p> </br>
 			<p> We here at PhotoGo give users an incredible place to both share images and support some of the most starved artists in our communities.  It is the combined ability of these two different services as well as the focus specifically on photography that makes PhotoGo Unique. If you have any questions please visit the Contact Us Page! </p>
+			<?php if(empty($_SESSION['logged_in'])) : ?>
 			<div class="row justify-content-center">
 				<a class="btn btn-primary btn-lg" href="signup.php" role="button">Sign Up Now!</a>
 			</div>
+			<?php endif ;?>
 		</div>
 
 		<footer>
