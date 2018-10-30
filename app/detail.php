@@ -6,6 +6,7 @@
   if (pg_num_rows($result) != 0){
     $price = pg_fetch_result($result, 0, 'price');
   }
+  include('get_bitpay_token.php');
 ?>
 
 <html>
@@ -27,9 +28,11 @@
 		      <a class="nav-item nav-link" href="about.php" style="border:none">About Us</a>
 		      <a class="nav-item nav-link" href="contact.php" style="border:none">Contact Us</a>
           <?php if(empty($_SESSION['logged_in'])) : ?>
-		      <a class="nav-item nav-link" href="login.php" style="border:none">Login</a>
-					<a class="nav-item nav-link" href="signup.php" style="border:none">Sign Up</a>
-          <?php endif ;?>
+  		      <a class="nav-item nav-link" href="login.php" style="border:none">Login</a>
+  					<a class="nav-item nav-link" href="signup.php" style="border:none">Sign Up</a>
+          <?php else :?>
+						<a class="btn btn-primary" href="log_out.php">Log Out</a>
+					<?php endif;?>
 		    </div>
 			</nav>
 		</header>
