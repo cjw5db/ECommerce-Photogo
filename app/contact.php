@@ -43,18 +43,31 @@
             $messageErr = "Please include a message with your contact info";
             $anyErr = TRUE;
         }
+        else{
+            $fields["message"] = htmlspecialchars($_POST["usersMessage"]);
+        }
 
+       // if(!anyErr){
         //email part
         //Load Composer's autoloader
-
         //Create a new PHPMailer instance
         $mail = new PHPMailer;
+        $outlook = 'PhotoGoECommerce@outlook.com';
+        $pwd = 'photogo2018!';
+        $host = 'smtp-mail.outlook.com';
+
+        $mail->IsSMTP();
+        $mail->Host = $host;
+        $mail->SMTPAuth = TRUE;
+        $mail->Username = $outlook;
+        $mail->Password = $pwd;
+        $mail->Port=587;
         //Set who the message is to be sent from
         $mail->setFrom('PhotoGoECommerce@outlook.com', 'Photo Go');
         //Set an alternative reply-to address
         $mail->addReplyTo('PhotoGoECommerce@outlook.com', 'Photo Go');
         //Set who the message is to be sent to
-        $mail->addAddress('PhotoGoECommerce@outlook.com', 'Photo Go');
+        $mail->addAddress('PhotoGoECommerce@outlook.com');
         //Set the subject line
         $mail->Subject = 'Contact Us Page has been activated by a User';
         $mail->Body = $fields["message"].$fields["name"].$fields["email"];
@@ -63,7 +76,6 @@
         //$mail->msgHTML(file_get_contents('contents.html'), __DIR__);
         //Replace the plain text body with one created manually
         $mail->AltBody = $fields["message"].$fields["name"].$fields["email"];
-
 
         //send the message, check for errors
         if (!$mail->send()) {
