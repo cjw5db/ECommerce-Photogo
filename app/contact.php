@@ -72,13 +72,16 @@
         $mail->addAddress('PhotoGoECommerce@outlook.com');
         //Set the subject line
         $mail->Subject = 'Contact Us Page has been activated by a User';
-        $mail->Body = $fields["message"]." ".$fields["name"]." ".$fields["email"];
+        $mail->Body = $fields["message"];
+        $mail->Body .= $fields["name"];
+        $mail->Body .= $fields["email"];
         //Read an HTML message body from an external file, convert referenced images to embedded,
         //convert HTML into a basic plain-text alternative body
         //$mail->msgHTML(file_get_contents('contents.html'), __DIR__);
         //Replace the plain text body with one created manually
-        $mail->AltBody = $fields["message"]." ".$fields["name"]." ".$fields["email"];
-
+        $mail->AltBody = $fields["message"];
+        $mail->AltBody .= $fields["name"];
+        $mail->AltBody .= $fields["email"];
         //send the message, check for errors
         if (!$mail->send()) {
             echo "Mailer Error: " . $mail->ErrorInfo;
