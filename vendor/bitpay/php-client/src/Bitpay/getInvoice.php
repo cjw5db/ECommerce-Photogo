@@ -4,25 +4,26 @@
   $storageEngine = new \Bitpay\Storage\FilesystemStorage();
   $privateKey    = $storageEngine->load('/tmp/bitpay.pri');
   $publicKey     = $storageEngine->load('/tmp/bitpay.pub');
+
   $client        = new \Bitpay\Client\Client();
   $network       = new \Bitpay\Network\Testnet();
   $adapter       = new \Bitpay\Client\Adapter\CurlAdapter();
+
   $client->setPrivateKey($privateKey);
   $client->setPublicKey($publicKey);
+
   $client->setNetwork($network);
   $client->setAdapter($adapter);
-echo $privateKey;
-echo $publicKey;
+
   $token = new \Bitpay\Token();
-  $token->setToken($_SESSION['token']);
+  $token->setToken($_GET['token']);
 
   $client->setToken($token);
 
   $invoice = new \Bitpay\Invoice();
   $buyer = new \Bitpay\Buyer();
-
   $buyer->setEmail($_SESSION['email']);
-  
+
   $invoice->setBuyer($buyer);
 
   $item = new \Bitpay\Item();
@@ -34,10 +35,12 @@ echo $publicKey;
 
   $invoice->setCurrency(new \Bitpay\Currency('BTC'));
 
+  $invoice->setRedirectUrl(__DIR__.'/../../../../../app/index.php');
+
   try {
     echo "Creating invoice at BitPay now.".PHP_EOL;
     $client->createInvoice($invoice);
-  } 
+  }
   catch (\Exception $e) {
     echo "Exception occured: " . $e->getMessage().PHP_EOL;
     $request  = $client->getRequest();

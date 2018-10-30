@@ -1,8 +1,7 @@
-<?php 
+<?php
 $storageEngine = new \Bitpay\Storage\FilesystemStorage();
 $privateKey = $storageEngine->load('/tmp/bitpay.pri');
 $publicKey = $storageEngine->load('/tmp/bitpay.pub');
-
 $sin = \Bitpay\SinKey::create()->setPublicKey($publicKey)->generate();
 
 $client = new \Bitpay\Client\Client();
@@ -16,7 +15,7 @@ $client->setPublicKey($publicKey);
 $client->setNetwork($network);
 $client->setAdapter($adapter);
 
-$pairingCode = 'vWCEjjS';
+$pairingCode = 'nNCSZE8';
 $token = $client->createToken(
  array(
  'pairingCode' => $pairingCode,
