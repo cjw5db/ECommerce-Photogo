@@ -6,12 +6,6 @@
   if (pg_num_rows($result) != 0){
     $price = pg_fetch_result($result, 0, 'price');
   }
-  include('get_bitpay_token.php');
-  $token = '';
-  $userResult = pg_query_params($db, "SELECT * FROM users WHERE email=$1", array($_SESSION['email']));
-  if (pg_num_rows($userResult) != 0){
-    $token = pg_fetch_result($userResult, 0, 'token');
-  }
 
   $json = file_get_contents('https://blockchain.info/ticker');
   $obj = json_decode($json);
@@ -88,7 +82,12 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <a role="button" class="btn btn-primary" href=<?php echo "transaction.php?price=".$price."&token=".$token ?>>Purchase</a>
+              <form action="https://test.bitpay.com/checkout" method="post" >
+                <input type="hidden" name="action" value="checkout" />
+                <input type="hidden" name="posData" value="" />
+                <input type="hidden" name="data" value="qzJcvD360bZEdUmbKOCpiyndSPPBJCTRcsSzFm/EvKXFke0xjaYFp7oo+7DfTZEhKy4OBc+5K9K98mExaQbIh13cWD98th0pfZARMLm2UxLcBaG/el1jgjo7THDc2qbrBAPPq6CyPyOLU/AyES9lMAMsoSkB4eXxOGQGijPsygRmqI5APPiBmmKWycTUBOhw6DgMch8M8JX3hpTiCV6EbQ==" />
+                <input type="image" src="https://test.bitpay.com/cdn/en_US/bp-btn-pay-currencies.svg" name="submit" style="width:168px;" alt="BitPay, the easy way to pay with bitcoins." >
+              </form>
             </div>
           </div>
         </div>
