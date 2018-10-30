@@ -12,7 +12,7 @@
         $fields = array(
                         'name' => '',
                         'email' => '',
-                        'message' => '');
+                        'message' => ''),
 
 
         if(empty($_POST["usersName"])){
