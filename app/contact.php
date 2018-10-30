@@ -50,12 +50,10 @@
         }
         
 
-
+       // if(!anyErr){
         //email part
         //Load Composer's autoloader
         //Create a new PHPMailer instance
-        if(!anyErr){
-    
         $mail = new PHPMailer;
         $outlook = 'photogo2018@gmail.com';
         $pwd = '2018photogo!';
@@ -85,15 +83,12 @@
         $mail->AltBody = $fields["name"]."      ";
         $mail->AltBody .= $fields["email"]."      ";
         $mail->AltBody .= $fields["message"]."      ";
-        }
         //send the message, check for errors
-        /*
         if (!$mail->send()) {
             echo "Mailer Error: " . $mail->ErrorInfo;
         } else {
             echo "Message sent!";
         }
-         */
 
     }
 ?>
