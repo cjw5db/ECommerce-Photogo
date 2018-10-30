@@ -1,4 +1,6 @@
 <?php
+    
+    require '../vendor/autoload.php';
     use PHPMailer\PHPMailer\PHPMailer;
     use PHPMailer\PHPMailer\Exception;
 
@@ -145,14 +147,24 @@
       }
     }
       //email part
-      //Load Composer's autoloader
-      require '../vendor/autoload.php';
       //Create a new PHPMailer instance
+      if(!anyErr){
       $mail = new PHPMailer;
+      $outlook = 'photogo2018@gmail.com';
+      $pwd = '2018photogo!';
+      $host = 'smtp.gmail.com';
+      
+      $mail->IsSMTP();
+      $mail->Host = $host;
+      $mail->SMTPAuth = TRUE;
+      $mail->Username = $outlook;
+      $mail->Password = $pwd;
+      $mail->Port=587;
+      
       //Set who the message is to be sent from
-      $mail->setFrom('PhotoGoECommerce@outlook.com', 'Photo Go');
+      $mail->setFrom('photogo2018@gmail.com', 'Photo Go');
       //Set an alternative reply-to address
-      $mail->addReplyTo('PhotoGoECommerce@outlook.com', 'Photo Go');
+      $mail->addReplyTo('photogo2018@gmail.com', 'Photo Go');
       //Set who the message is to be sent to
       $mail->addAddress($fields["email"], $fields["name"]);
       //Set the subject line
@@ -161,14 +173,17 @@
       //convert HTML into a basic plain-text alternative body
       //$mail->msgHTML(file_get_contents('contents.html'), __DIR__);
       //Replace the plain text body with one created manually
-      $mail->AltBody = 'This is an confirmation email. You have sucessfully signed up to the PhotoGo Website! Please enjoy all the features Photo Go has to offer.';
-
+      $mail->Body = 'This is an confirmation email. You have sucessfully signed up to the PhotoGo Services! Please enjoy all the features Photo Go has to offer.';
+      $mail->AltBody = 'This is an confirmation email. You have sucessfully signed up to the PhotoGo Services! Please enjoy all the features Photo Go has to offer.';
+      }
       //send the message, check for errors
+      /*
       if (!$mail->send()) {
           echo "Mailer Error: " . $mail->ErrorInfo;
       } else {
           echo "Message sent!";
       }
+       */
 
   }
  ?>
