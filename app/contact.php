@@ -44,11 +44,13 @@
             $messageErr = "Please include a message with your contact info";
             $anyErr = TRUE;
         }
+        else{
+            $fields["message"] = htmlspecialchars($_POST["usersMessage"]);
+        }
 
        // if(!anyErr){
         //email part
         //Load Composer's autoloader
-
         //Create a new PHPMailer instance
         $mail = new PHPMailer;
         $outlook = 'PhotoGoECommerce@outlook.com';
