@@ -7,6 +7,12 @@
     $price = pg_fetch_result($result, 0, 'price');
   }
   include('get_bitpay_token.php');
+
+  $json = file_get_contents('https://blockchain.info/ticker');
+  $obj = json_decode($json);
+  $dollarConv = $obj->USD->last;
+  $dollarPrice = $dollarConv * $price;
+  $dollarPrice = round($dollarPrice, 2);
 ?>
 
 <html>
@@ -52,8 +58,10 @@
     						</footer>
     					</div>
     					<div class="card-footer text-center">
-                <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#purchaseModal">
+                <button type="button" style = "margin:10px" class="btn btn-success btn-lg" data-toggle="modal" data-target="#purchaseModal">
                   Purchase - <i class="fab fa-bitcoin"></i><?php echo pg_fetch_result($result, 0, 'price')?>
+                  <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#conversionModal">
+                    Convert Price ($USD)
                 </button>
     					</div>
     				</div>
@@ -76,6 +84,25 @@
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
               <a role="button" class="btn btn-primary" href=<?php echo "transaction.php?price=".pg_fetch_result($result, 0, 'price')?>">Purchase</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="conversionModal" tabindex="-1" role="dialog" aria-labelledby="Convert Price ($USD)" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modalLabel">Convert Price ($USD)</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <?php echo "$", $dollarPrice ?>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
           </div>
         </div>
