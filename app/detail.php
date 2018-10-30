@@ -10,7 +10,6 @@
 
   $userResult = pg_query_params($db, "SELECT * FROM users WHERE email=$1", array($_SESSION['email']));
   $token = pg_fetch_result($userResult, 0, 'token');
-  echo $token;
 
   $json = file_get_contents('https://blockchain.info/ticker');
   $obj = json_decode($json);
