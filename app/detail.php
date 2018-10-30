@@ -75,7 +75,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <a role="button" class="btn btn-primary" href="transaction.php">Purchase</a>
+              <a role="button" class="btn btn-primary" href=<?php echo "transaction.php?price=".pg_fetch_result($result, 0, 'price')?>">Purchase</a>
             </div>
           </div>
         </div>

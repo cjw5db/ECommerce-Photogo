@@ -16,7 +16,7 @@ $client->setPublicKey($publicKey);
 $client->setNetwork($network);
 $client->setAdapter($adapter);
 
-$pairingCode = 'DKhp8Kr';
+$pairingCode = 'vWCEjjS';
 $token = $client->createToken(
  array(
  'pairingCode' => $pairingCode,

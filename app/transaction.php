@@ -1,4 +1,5 @@
 <?php
   session_start();
-  echo $_SESSION['token'];
+  include('get_bitpay_token.php');
+  include('../vendor/bitpay/php-client/src/Bitpay/invoice.php');
 ?>
