@@ -84,11 +84,13 @@
         $mail->AltBody .= $fields["email"]."      ";
         $mail->AltBody .= $fields["message"]."      ";
         //send the message, check for errors
+        /*
         if (!$mail->send()) {
             echo "Mailer Error: " . $mail->ErrorInfo;
         } else {
             echo "Message sent!";
         }
+         */
 
     }
 ?>

@@ -175,11 +175,13 @@
       $mail->AltBody = 'This is an confirmation email. You have sucessfully signed up to PhotoGo! Please enjoy all the features Photo Go has to offer.';
 
       //send the message, check for errors
+      /*
       if (!$mail->send()) {
           echo "Mailer Error: " . $mail->ErrorInfo;
       } else {
           echo "Message sent!";
       }
+       */
 
   }
  ?>
