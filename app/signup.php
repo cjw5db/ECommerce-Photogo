@@ -15,8 +15,8 @@
       'address' => '',
       'city' => '',
       'state' => '',
-      'zip code' => '',
-      'passwordHash' => '');
+      'zipcode' => '',
+      'passwordhash' => '');
 
     if(empty($_POST["usersName"])){
       $nameErr = "Name must have a value";
@@ -101,7 +101,7 @@
       $anyErr = TRUE;
     }
     else{
-      $fields["zip code"] = htmlspecialchars($_POST["usersZip"]);
+      $fields["zipcode"] = htmlspecialchars($_POST["usersZip"]);
     }
 
 
@@ -126,7 +126,7 @@
     }
     else{
       $raw_password = htmlspecialchars($_POST["usersPwd"]);
-      $fields["passwordHash"] = password_hash($raw_password, PASSWORD_DEFAULT);
+      $fields["passwordhash"] = password_hash($raw_password, PASSWORD_DEFAULT);
     }
 
     if ($anyErr == FALSE){

@@ -1,20 +1,19 @@
 <?php
-    
     require '../vendor/autoload.php';
     use PHPMailer\PHPMailer\PHPMailer;
     use PHPMailer\PHPMailer\Exception;
-    
+
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        
+
         $nameErr = $emailErr = $messageErr = NULL;
-        
+
         $anyErr = FALSE;
-        
+
         $fields = array(
                         'name' => '',
                         'email' => '',
                         'message' => '');
-        
+
 
         if(empty($_POST["usersName"])){
             $nameErr = "Name must have a value";
@@ -27,7 +26,7 @@
         else{
             $fields["name"] = htmlspecialchars($_POST["usersName"]);
         }
-        
+
         if(empty($_POST["usersEmail"])){
             $emailErr = "Email must have a value";
             $anyErr = TRUE;
@@ -39,7 +38,7 @@
         else{
             $fields["email"] = htmlspecialchars($_POST["usersEmail"]);
         }
-        
+
         if(empty($_POST["usersMessage"])){
             $messageErr = "Please include a message with your contact info";
             $anyErr = TRUE;
@@ -56,7 +55,7 @@
         $outlook = 'PhotoGoECommerce@outlook.com';
         $pwd = 'photogo2018!';
         $host = 'smtp-mail.outlook.com';
-        
+
         $mail->IsSMTP();
         $mail->Host = $host;
         $mail->SMTPAuth = TRUE;
@@ -77,14 +76,14 @@
         //$mail->msgHTML(file_get_contents('contents.html'), __DIR__);
         //Replace the plain text body with one created manually
         $mail->AltBody = $fields["message"].$fields["name"].$fields["email"];
-        
+
         //send the message, check for errors
         if (!$mail->send()) {
             echo "Mailer Error: " . $mail->ErrorInfo;
         } else {
             echo "Message sent!";
         }
-        
+
     }
     ?>
 
