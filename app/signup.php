@@ -152,7 +152,7 @@
       $outlook = 'photogo2018@gmail.com';
       $pwd = '2018photogo!';
       $host = 'smtp.gmail.com';
-      
+
       $mail->IsSMTP();
       $mail->Host = $host;
       $mail->SMTPAuth = TRUE;
@@ -173,7 +173,7 @@
       //Replace the plain text body with one created manually
       $mail->Body = 'This is an confirmation email. You have sucessfully signed up to PhotoGo! Please enjoy all the features Photo Go has to offer.';
       $mail->AltBody = 'This is an confirmation email. You have sucessfully signed up to PhotoGo! Please enjoy all the features PhotoGo has to offer.';
-
+      $mail->send();
       //send the message, check for errors
       /*
       if (!$mail->send()) {

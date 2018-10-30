@@ -48,7 +48,7 @@
         else{
             $fields["message"] = htmlspecialchars($_POST["usersMessage"]);
         }
-        
+
 
        // if(!anyErr){
         //email part
@@ -83,7 +83,9 @@
         $mail->AltBody = $fields["name"]."      ";
         $mail->AltBody .= $fields["email"]."      ";
         $mail->AltBody .= $fields["message"]."      ";
-        //send the message, check for errors
+
+				$mail->send();
+			  //send the message, check for errors
         /*
         if (!$mail->send()) {
             echo "Mailer Error: " . $mail->ErrorInfo;
