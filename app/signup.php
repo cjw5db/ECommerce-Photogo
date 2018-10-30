@@ -1,7 +1,7 @@
 <?php
     use PHPMailer\PHPMailer\PHPMailer;
     use PHPMailer\PHPMailer\Exception;
-    
+
   if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $nameErr = $emailErr = $addressErr = $cityErr =
@@ -139,6 +139,9 @@
       }
       else{
         pg_insert($db, "users", $fields);
+        session_start();
+        $_SESSION['email'] = $fields['email'];
+				$_SESSION['logged_in'] = TRUE;
       }
     }
       //email part
@@ -159,14 +162,14 @@
       //$mail->msgHTML(file_get_contents('contents.html'), __DIR__);
       //Replace the plain text body with one created manually
       $mail->AltBody = 'This is an confirmation email. You have sucessfully signed up to the PhotoGo Website! Please enjoy all the features Photo Go has to offer.';
-      
+
       //send the message, check for errors
       if (!$mail->send()) {
           echo "Mailer Error: " . $mail->ErrorInfo;
       } else {
           echo "Message sent!";
       }
-      
+
   }
  ?>
 

@@ -1,4 +1,5 @@
 <?php
+  session_start();
   $picPath = "images/fulls/".$_GET['id'].".jpg";
   include('get_db_connection.php');
   $result = pg_query_params($db, "SELECT * FROM product WHERE id = $1", array($_GET['id']));
@@ -25,8 +26,10 @@
 		    <div class="navbar-nav">
 		      <a class="nav-item nav-link" href="about.php" style="border:none">About Us</a>
 		      <a class="nav-item nav-link" href="contact.php" style="border:none">Contact Us</a>
+          <?php if(empty($_SESSION['logged_in'])) : ?>
 		      <a class="nav-item nav-link" href="login.php" style="border:none">Login</a>
 					<a class="nav-item nav-link" href="signup.php" style="border:none">Sign Up</a>
+          <?php endif ;?>
 		    </div>
 			</nav>
 		</header>
