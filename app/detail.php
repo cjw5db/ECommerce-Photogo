@@ -85,7 +85,8 @@
               <form action="https://test.bitpay.com/checkout" method="post" >
                 <input type="hidden" name="action" value="checkout" />
                 <input type="hidden" name="posData" value="" />
-                <input type="hidden" name="data" value="qzJcvD360bZEdUmbKOCpiyndSPPBJCTRcsSzFm/EvKXFke0xjaYFp7oo+7DfTZEhKy4OBc+5K9K98mExaQbIh13cWD98th0pfZARMLm2UxLcBaG/el1jgjo7THDc2qbrBAPPq6CyPyOLU/AyES9lMAMsoSkB4eXxOGQGijPsygRmqI5APPiBmmKWycTUBOhw6DgMch8M8JX3hpTiCV6EbQ==" />
+                <input type="hidden" name="price" value="<?php echo $price;?>" />
+                <input type="hidden" name="data" value="qzJcvD360bZEdUmbKOCpiyndSPPBJCTRcsSzFm/EvKXFke0xjaYFp7oo+7DfTZEhSKKO5kYAMM+z6g2Pbjo7mrlAYctVVjK8uuC/JwN3DG+a7iXCdynrXp/XBPuF5t4qRy5A5ZDXrA8PoIPM7i6gjLnulN5nmMY3K/N18Rc5Y75N5yFwTHKeZs+KaJLKNy/8VcUboOw7EARElCWJTuuZUg==" />
                 <input type="image" src="https://test.bitpay.com/cdn/en_US/bp-btn-pay-currencies.svg" name="submit" style="width:168px;" alt="BitPay, the easy way to pay with bitcoins." >
               </form>
             </div>
