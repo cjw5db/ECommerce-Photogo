@@ -7,9 +7,11 @@
     $price = pg_fetch_result($result, 0, 'price');
   }
   include('get_bitpay_token.php');
-
+  $token = '';
   $userResult = pg_query_params($db, "SELECT * FROM users WHERE email=$1", array($_SESSION['email']));
-  $token = pg_fetch_result($userResult, 0, 'token');
+  if (pg_num_rows($userResult) != 0){
+    $token = pg_fetch_result($userResult, 0, 'token');
+  }
 
   $json = file_get_contents('https://blockchain.info/ticker');
   $obj = json_decode($json);
