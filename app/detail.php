@@ -2,7 +2,7 @@
   session_start();
   $picPath = "images/fulls/".$_GET['id'].".jpg";
   include('get_db_connection.php');
-  $result = pg_query_params($db, "SELECT * FROM product WHERE id = $1", array($_GET['id']));
+  $result = pg_query_params($db, "SELECT * FROM products WHERE id = $1", array($_GET['id']));
   if (pg_num_rows($result) != 0){
     $price = pg_fetch_result($result, 0, 'price');
   }
@@ -82,7 +82,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <form action="https://test.bitpay.com/checkout" method="post" >
+              <form action="https://test.bitpay.com/checkout" method="post">
                 <input type="hidden" name="action" value="checkout" />
                 <input type="hidden" name="posData" value="" />
                 <input type="hidden" name="price" value="<?php echo $price;?>" />
