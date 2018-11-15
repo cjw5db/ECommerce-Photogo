@@ -42,54 +42,54 @@
     }
 
     if(empty($_POST["usersMessage"])){
-        $messageErr = "Please include a message with your contact info";
+        $messageErr = "Message must not be empty";
         $anyErr = TRUE;
     }
     else{
         $fields["message"] = htmlspecialchars($_POST["usersMessage"]);
     }
 
+	  if(!$anyErr){
+	  	//email part
+	    //Load Composer's autoloader
+	    //Create a new PHPMailer instance
+	    $mail = new PHPMailer;
+	    $outlook = 'photogo2018@gmail.com';
+	    $pwd = '2018photogo!';
+	    $host = 'smtp.gmail.com';
 
-   // if(!anyErr){
-    //email part
-    //Load Composer's autoloader
-    //Create a new PHPMailer instance
-    $mail = new PHPMailer;
-    $outlook = 'photogo2018@gmail.com';
-    $pwd = '2018photogo!';
-    $host = 'smtp.gmail.com';
+	    $mail->IsSMTP();
+	    $mail->Host = $host;
+	    $mail->SMTPAuth = TRUE;
+	    $mail->Username = $outlook;
+	    $mail->Password = $pwd;
+	    $mail->Port=587;
+	    //Set who the message is to be sent from
+	    $mail->setFrom('photogo2018@gmail.com', 'Photo Go');
+	    //Set an alternative reply-to address
+	    $mail->addReplyTo('photogo2018@gmail.com', 'Photo Go');
+	    //Set who the message is to be sent to
+	    $mail->addAddress('photogo2018@gmail.com');
+	    //Set the subject line
+	    $mail->Subject = 'Contact Us Page has been activated by a User';
+	    $mail->Body = $fields["name"]."      ";
+	    $mail->Body .= $fields["email"]."      ";
+	    $mail->Body .= $fields["message"]."      ";
+	    //Read an HTML message body from an external file, convert referenced images to embedded,
+	    //convert HTML into a basic plain-text alternative body
+	    //$mail->msgHTML(file_get_contents('contents.html'), __DIR__);
+	    //Replace the plain text body with one created manually
+	    $mail->AltBody = $fields["name"]."      ";
+	    $mail->AltBody .= $fields["email"]."      ";
+	    $mail->AltBody .= $fields["message"]."      ";
 
-    $mail->IsSMTP();
-    $mail->Host = $host;
-    $mail->SMTPAuth = TRUE;
-    $mail->Username = $outlook;
-    $mail->Password = $pwd;
-    $mail->Port=587;
-    //Set who the message is to be sent from
-    $mail->setFrom('photogo2018@gmail.com', 'Photo Go');
-    //Set an alternative reply-to address
-    $mail->addReplyTo('photogo2018@gmail.com', 'Photo Go');
-    //Set who the message is to be sent to
-    $mail->addAddress('photogo2018@gmail.com');
-    //Set the subject line
-    $mail->Subject = 'Contact Us Page has been activated by a User';
-    $mail->Body = $fields["name"]."      ";
-    $mail->Body .= $fields["email"]."      ";
-    $mail->Body .= $fields["message"]."      ";
-    //Read an HTML message body from an external file, convert referenced images to embedded,
-    //convert HTML into a basic plain-text alternative body
-    //$mail->msgHTML(file_get_contents('contents.html'), __DIR__);
-    //Replace the plain text body with one created manually
-    $mail->AltBody = $fields["name"]."      ";
-    $mail->AltBody .= $fields["email"]."      ";
-    $mail->AltBody .= $fields["message"]."      ";
+			if (!$mail->send()){
+				$mailErr = "Signup confirmation email failed to send";
+			}
 
-		if (!$mail->send()){
-			$mailErr = "Signup confirmation email failed to send";
+			header('Location: index.php');
+			exit();
 		}
-
-		header('Location: index.php');
-		exit();
   }
 ?>
 
@@ -138,19 +138,41 @@
 			<form action='<?php htmlspecialchars($_SERVER["PHP_SELF"]);?>' method='post' role="form">
 				<div class="form-row justify-content-center">
 					<div class="form-group col-md-4">
-						<input type="text" name="usersName" class="form-control form-control" id="usersName" placeholder="Name">
+						<?php if(isset($nameErr)) : ?>
+							<input type="text" class="form-control is-invalid" name="usersName" id="usersName" placeholder="Name">
+							<div class="invalid-feedback">
+								<?php echo $nameErr;?>
+							</div>
+						<?php else : ?>
+							<input type="text" class="form-control is-valid" name="usersName" id="usersName" placeholder="Name">
+						<?php endif ; ?>
+
 					</div>
 				</div>
 
 				<div class="form-row justify-content-center">
 					<div class="form-group col-md-4">
-						<input type="email" name="usersEmail" class="form-control form-control" id="usersEmail" placeholder="Email">
+						<?php if(isset($emailErr)) : ?>
+							<input type="email" class="form-control is-invalid" name="usersEmail" id="usersEmail" placeholder="Email">
+							<div class="invalid-feedback">
+								<?php echo $emailErr;?>
+							</div>
+						<?php else : ?>
+							<input type="email" class="form-control is-valid" name="usersEmail" id="usersEmail" placeholder="Email">
+						<?php endif ; ?>
 					</div>
 				</div>
 
 				<div class="form-row justify-content-center">
 					<div class="form-group col-md-4">
-						<textarea class="form-control form-control" name="usersMessage" id="usersMessage" placeholder="Message"></textarea>
+						<?php if(isset($messageErr)) :?>
+							<textarea class="form-control is-invalid" name="usersMessage" id="usersMessage" placeholder="Message"></textarea>
+							<div class="invalid-feedback">
+								<?php echo $messageErr;?>
+							</div>
+						<? else:?>
+							<textarea class="form-control is-valid" name="usersMessage" id="usersMessage" placeholder="Message"></textarea>
+						<? endif;?>
 					</div>
 				</div>
 
