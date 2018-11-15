@@ -7,8 +7,7 @@
     $price = pg_fetch_result($result, 0, 'price');
 
     //do a SELECT query on database to get usersclaimed array and discountpercentage associated with this photo's id number (see add_favorite.php)
-    //do a SELECT query on database to get user id associated with this user's email (in $_SESSION)
-    //if the user's id number is present in the usersclaimed array, then apply discount:
+    //if the user's email ($_SESSION['email']) is present in the usersclaimed array, then apply discount:
     //  $price = $price*(1-$discount)
     //remove userid number from usersclaimed array (see remove_favorite.php)
   }
