@@ -5,6 +5,12 @@
   $result = pg_query_params($db, "SELECT * FROM products WHERE id = $1", array($_GET['id']));
   if (pg_num_rows($result) != 0){
     $price = pg_fetch_result($result, 0, 'price');
+
+    //do a SELECT query on database to get usersclaimed array and discountpercentage associated with this photo's id number (see add_favorite.php)
+    //do a SELECT query on database to get user id associated with this user's email (in $_SESSION)
+    //if the user's id number is present in the usersclaimed array, then apply discount:
+    //  $price = $price*(1-$discount)
+    //remove userid number from usersclaimed array (see remove_favorite.php)
   }
 
   $json = file_get_contents('https://blockchain.info/ticker');
@@ -58,6 +64,9 @@
     						</footer>
     					</div>
     					<div class="card-footer text-center">
+                <!-- add button here that provides a form to the user to submit a discount code
+                  url for submit should be <php echo "discount.php?id=".$_GET['id'] >
+                  FORM MUST BE ON THIS PAGE, NOT A LINK TO A PAGE WITH A FORM -->
                 <div class="btn-group">
                   <button type="button" class="btn btn-success btn-lg">
                     <i class="fab fa-bitcoin"></i><?php echo pg_fetch_result($result, 0, 'price')?>
