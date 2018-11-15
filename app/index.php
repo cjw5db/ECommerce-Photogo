@@ -1,8 +1,20 @@
 <?php
 	session_start();
+	$logged_in = FALSE;
+
+	if(isset($_SESSION['logged_in']) and $_SESSION['logged_in'] == TRUE){
+		$logged_in = TRUE;
+		if(isset($_SESSION['email'])){
+			include('get_db_connection.php');
+			$result = pg_query_params($db, "SELECT array_to_json(favorites) AS favorites FROM users WHERE email = $1", array($_SESSION['email']));
+			if (pg_num_rows($result) != 0){
+				$favorites = json_decode(pg_fetch_result($result, 0, 'favorites'));
+			}
+		}
+	}
+
+
  ?>
-
-
 
 <!DOCTYPE HTML>
 <html>
@@ -23,11 +35,12 @@
 				<div class="navbar-nav">
 					<a class="nav-item nav-link" href="about.php" style="border:none">About Us</a>
 					<a class="nav-item nav-link" href="contact.php" style="border:none">Contact Us</a>
-					<?php if(empty($_SESSION['logged_in']) or $_SESSION['logged_in'] == False) : ?>
-					<a class="nav-item nav-link" href="login.php" style="border:none">Login</a>
-					<a class="nav-item nav-link" href="signup.php" style="border:none">Sign Up</a>
-					<?php else :?>
+					<?php if($logged_in) : ?>
+            <a class="nav-item nav-link" href="user.php" style="border:none">My Account</a>
 						<a class="btn btn-primary" href="log_out.php">Log Out</a>
+          <?php else :?>
+            <a class="nav-item nav-link" href="login.php" style="border:none">Login</a>
+  					<a class="nav-item nav-link" href="signup.php" style="border:none">Sign Up</a>
 					<?php endif;?>
 				</div>
 			</nav>
@@ -51,6 +64,13 @@
 					</div>
 					<div class="card-footer text-center">
 						<a href="detail.php?id=1" class="btn btn-primary text-center">View</a>
+						<?php if($logged_in) : ?>
+							<?php if(in_array(1, $favorites)) :?>
+								<a href="remove_favorite.php?id=1" class="btn btn-danger text-center"><i class="fas fa-heart"></i></a>
+							<?php else :?>
+								<a href="add_favorite.php?id=1" class="btn btn-danger text-center"><i class="far fa-heart"></i></a>
+							<?php endif ;?>
+						<?php endif;?>
 					</div>
 				</div>
 				<div class="card">
@@ -64,6 +84,13 @@
 					</div>
 					<div class="card-footer text-center">
 						<a href="detail.php?id=2" class="btn btn-primary text-center">View</a>
+						<?php if($logged_in) : ?>
+							<?php if(in_array(2, $favorites)) :?>
+								<a href="remove_favorite.php?id=2" class="btn btn-danger text-center"><i class="fas fa-heart"></i></a>
+							<?php else :?>
+								<a href="add_favorite.php?id=2" class="btn btn-danger text-center"><i class="far fa-heart"></i></a>
+							<?php endif ;?>
+						<?php endif;?>
 					</div>
 				</div>
 				<div class="card">
@@ -77,6 +104,13 @@
 					</div>
 					<div class="card-footer text-center">
 						<a href="detail.php?id=3" class="btn btn-primary text-center">View</a>
+						<?php if($logged_in) : ?>
+							<?php if(in_array(3, $favorites)) :?>
+								<a href="remove_favorite.php?id=3" class="btn btn-danger text-center"><i class="fas fa-heart"></i></a>
+							<?php else :?>
+								<a href="add_favorite.php?id=3" class="btn btn-danger text-center"><i class="far fa-heart"></i></a>
+							<?php endif ;?>
+						<?php endif;?>
 					</div>
 				</div>
 				<div class="card">
@@ -90,6 +124,13 @@
 					</div>
 					<div class="card-footer text-center">
 						<a href="detail.php?id=4" class="btn btn-primary text-center">View</a>
+						<?php if($logged_in) : ?>
+							<?php if(in_array(4, $favorites)) :?>
+								<a href="remove_favorite.php?id=4" class="btn btn-danger text-center"><i class="fas fa-heart"></i></a>
+							<?php else :?>
+								<a href="add_favorite.php?id=4" class="btn btn-danger text-center"><i class="far fa-heart"></i></a>
+							<?php endif ;?>
+						<?php endif;?>
 					</div>
 				</div>
 				<div class="card">
@@ -103,6 +144,13 @@
 					</div>
 					<div class="card-footer text-center">
 						<a href="detail.php?id=5" class="btn btn-primary text-center">View</a>
+						<?php if($logged_in) : ?>
+							<?php if(in_array(5, $favorites)) :?>
+								<a href="remove_favorite.php?id=5" class="btn btn-danger text-center"><i class="fas fa-heart"></i></a>
+							<?php else :?>
+								<a href="add_favorite.php?id=5" class="btn btn-danger text-center"><i class="far fa-heart"></i></a>
+							<?php endif ;?>
+						<?php endif;?>
 					</div>
 				</div>
 				<div class="card">
@@ -116,6 +164,13 @@
 					</div>
 					<div class="card-footer text-center">
 						<a href="detail.php?id=6" class="btn btn-primary text-center">View</a>
+						<?php if($logged_in) : ?>
+							<?php if(in_array(6, $favorites)) :?>
+								<a href="remove_favorite.php?id=6" class="btn btn-danger text-center"><i class="fas fa-heart"></i></a>
+							<?php else :?>
+								<a href="add_favorite.php?id=6" class="btn btn-danger text-center"><i class="far fa-heart"></i></a>
+							<?php endif ;?>
+						<?php endif;?>
 					</div>
 				</div>
 				<div class="card">
@@ -129,6 +184,13 @@
 					</div>
 					<div class="card-footer text-center">
 						<a href="detail.php?id=7" class="btn btn-primary text-center">View</a>
+						<?php if($logged_in) : ?>
+							<?php if(in_array(7, $favorites)) :?>
+								<a href="remove_favorite.php?id=7" class="btn btn-danger text-center"><i class="fas fa-heart"></i></a>
+							<?php else :?>
+								<a href="add_favorite.php?id=7" class="btn btn-danger text-center"><i class="far fa-heart"></i></a>
+							<?php endif ;?>
+						<?php endif;?>
 					</div>
 				</div>
 				<div class="card">
@@ -142,6 +204,13 @@
 					</div>
 					<div class="card-footer text-center">
 						<a href="detail.php?id=8" class="btn btn-primary text-center">View</a>
+						<?php if($logged_in) : ?>
+							<?php if(in_array(8, $favorites)) :?>
+								<a href="remove_favorite.php?id=8" class="btn btn-danger text-center"><i class="fas fa-heart"></i></a>
+							<?php else :?>
+								<a href="add_favorite.php?id=8" class="btn btn-danger text-center"><i class="far fa-heart"></i></a>
+							<?php endif ;?>
+						<?php endif;?>
 					</div>
 				</div>
 				<div class="card">
@@ -155,6 +224,13 @@
 					</div>
 					<div class="card-footer text-center">
 						<a href="detail.php?id=9" class="btn btn-primary text-center">View</a>
+						<?php if($logged_in) : ?>
+							<?php if(in_array(9, $favorites)) :?>
+								<a href="remove_favorite.php?id=9" class="btn btn-danger text-center"><i class="fas fa-heart"></i></a>
+							<?php else :?>
+								<a href="add_favorite.php?id=9" class="btn btn-danger text-center"><i class="far fa-heart"></i></a>
+							<?php endif ;?>
+						<?php endif;?>
 					</div>
 				</div>
 				<div class="card">
@@ -168,6 +244,13 @@
 					</div>
 					<div class="card-footer text-center">
 						<a href="detail.php?id=10" class="btn btn-primary text-center">View</a>
+						<?php if($logged_in) : ?>
+							<?php if(in_array(10, $favorites)) :?>
+								<a href="remove_favorite.php?id=10" class="btn btn-danger text-center"><i class="fas fa-heart"></i></a>
+							<?php else :?>
+								<a href="add_favorite.php?id=10" class="btn btn-danger text-center"><i class="far fa-heart"></i></a>
+							<?php endif ;?>
+						<?php endif;?>
 					</div>
 				</div>
 				<div class="card">
@@ -181,6 +264,13 @@
 					</div>
 					<div class="card-footer text-center">
 						<a href="detail.php?id=11" class="btn btn-primary text-center">View</a>
+						<?php if($logged_in) : ?>
+							<?php if(in_array(11, $favorites)) :?>
+								<a href="remove_favorite.php?id=11" class="btn btn-danger text-center"><i class="fas fa-heart"></i></a>
+							<?php else :?>
+								<a href="add_favorite.php?id=11" class="btn btn-danger text-center"><i class="far fa-heart"></i></a>
+							<?php endif ;?>
+						<?php endif;?>
 					</div>
 				</div>
 				<div class="card">
@@ -194,6 +284,13 @@
 					</div>
 					<div class="card-footer text-center">
 						<a href="detail.php?id=12" class="btn btn-primary text-center">View</a>
+						<?php if($logged_in) : ?>
+							<?php if(in_array(12, $favorites)) :?>
+								<a href="remove_favorite.php?id=12" class="btn btn-danger text-center"><i class="fas fa-heart"></i></a>
+							<?php else :?>
+								<a href="add_favorite.php?id=12" class="btn btn-danger text-center"><i class="far fa-heart"></i></a>
+							<?php endif ;?>
+						<?php endif;?>
 					</div>
 				</div>
 			</div>

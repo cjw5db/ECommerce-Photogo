@@ -1,100 +1,96 @@
 <?php
 	session_start();
 
-    require '../vendor/autoload.php';
-    use PHPMailer\PHPMailer\PHPMailer;
-    use PHPMailer\PHPMailer\Exception;
+  require '../vendor/autoload.php';
+  use PHPMailer\PHPMailer\PHPMailer;
+  use PHPMailer\PHPMailer\Exception;
 
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-        $nameErr = $emailErr = $messageErr = NULL;
+    $nameErr = $emailErr = $messageErr = $mailErr = NULL;
 
-        $anyErr = FALSE;
+    $anyErr = FALSE;
 
-        $fields = array(
-                        'name' => '',
-                        'email' => '',
-                        'message' => '');
-
-
-        if(empty($_POST["usersName"])){
-            $nameErr = "Name must have a value";
-            $anyErr = TRUE;
-        }
-        else if(preg_match("/[^a-zA-Z\s]/", htmlspecialchars($_POST["usersName"])) == 1){
-            $nameErr = "Name must only contain letters";
-            $anyErr = TRUE;
-        }
-        else{
-            $fields["name"] = htmlspecialchars($_POST["usersName"]);
-        }
-
-        if(empty($_POST["usersEmail"])){
-            $emailErr = "Email must have a value";
-            $anyErr = TRUE;
-        }
-        else if(preg_match("/^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]{2,}$/", htmlspecialchars($_POST["usersEmail"])) == 0){
-            $emailErr = "Email must be of the correct format";
-            $anyErr = TRUE;
-        }
-        else{
-            $fields["email"] = htmlspecialchars($_POST["usersEmail"]);
-        }
-
-        if(empty($_POST["usersMessage"])){
-            $messageErr = "Please include a message with your contact info";
-            $anyErr = TRUE;
-        }
-        else{
-            $fields["message"] = htmlspecialchars($_POST["usersMessage"]);
-        }
+    $fields = array(
+      'name' => '',
+      'email' => '',
+      'message' => '');
 
 
-       // if(!anyErr){
-        //email part
-        //Load Composer's autoloader
-        //Create a new PHPMailer instance
-        $mail = new PHPMailer;
-        $outlook = 'photogo2018@gmail.com';
-        $pwd = '2018photogo!';
-        $host = 'smtp.gmail.com';
-
-        $mail->IsSMTP();
-        $mail->Host = $host;
-        $mail->SMTPAuth = TRUE;
-        $mail->Username = $outlook;
-        $mail->Password = $pwd;
-        $mail->Port=587;
-        //Set who the message is to be sent from
-        $mail->setFrom('photogo2018@gmail.com', 'Photo Go');
-        //Set an alternative reply-to address
-        $mail->addReplyTo('photogo2018@gmail.com', 'Photo Go');
-        //Set who the message is to be sent to
-        $mail->addAddress('photogo2018@gmail.com');
-        //Set the subject line
-        $mail->Subject = 'Contact Us Page has been activated by a User';
-        $mail->Body = $fields["name"]."      ";
-        $mail->Body .= $fields["email"]."      ";
-        $mail->Body .= $fields["message"]."      ";
-        //Read an HTML message body from an external file, convert referenced images to embedded,
-        //convert HTML into a basic plain-text alternative body
-        //$mail->msgHTML(file_get_contents('contents.html'), __DIR__);
-        //Replace the plain text body with one created manually
-        $mail->AltBody = $fields["name"]."      ";
-        $mail->AltBody .= $fields["email"]."      ";
-        $mail->AltBody .= $fields["message"]."      ";
-
-				$mail->send();
-			  //send the message, check for errors
-        /*
-        if (!$mail->send()) {
-            echo "Mailer Error: " . $mail->ErrorInfo;
-        } else {
-            echo "Message sent!";
-        }
-         */
-
+    if(empty($_POST["usersName"])){
+        $nameErr = "Name must have a value";
+        $anyErr = TRUE;
     }
+    else if(preg_match("/[^a-zA-Z\s]/", htmlspecialchars($_POST["usersName"])) == 1){
+        $nameErr = "Name must only contain letters";
+        $anyErr = TRUE;
+    }
+    else{
+        $fields["name"] = htmlspecialchars($_POST["usersName"]);
+    }
+
+    if(empty($_POST["usersEmail"])){
+        $emailErr = "Email must have a value";
+        $anyErr = TRUE;
+    }
+    else if(preg_match("/^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]{2,}$/", htmlspecialchars($_POST["usersEmail"])) == 0){
+        $emailErr = "Email must be of the correct format";
+        $anyErr = TRUE;
+    }
+    else{
+        $fields["email"] = htmlspecialchars($_POST["usersEmail"]);
+    }
+
+    if(empty($_POST["usersMessage"])){
+        $messageErr = "Please include a message with your contact info";
+        $anyErr = TRUE;
+    }
+    else{
+        $fields["message"] = htmlspecialchars($_POST["usersMessage"]);
+    }
+
+
+   // if(!anyErr){
+    //email part
+    //Load Composer's autoloader
+    //Create a new PHPMailer instance
+    $mail = new PHPMailer;
+    $outlook = 'photogo2018@gmail.com';
+    $pwd = '2018photogo!';
+    $host = 'smtp.gmail.com';
+
+    $mail->IsSMTP();
+    $mail->Host = $host;
+    $mail->SMTPAuth = TRUE;
+    $mail->Username = $outlook;
+    $mail->Password = $pwd;
+    $mail->Port=587;
+    //Set who the message is to be sent from
+    $mail->setFrom('photogo2018@gmail.com', 'Photo Go');
+    //Set an alternative reply-to address
+    $mail->addReplyTo('photogo2018@gmail.com', 'Photo Go');
+    //Set who the message is to be sent to
+    $mail->addAddress('photogo2018@gmail.com');
+    //Set the subject line
+    $mail->Subject = 'Contact Us Page has been activated by a User';
+    $mail->Body = $fields["name"]."      ";
+    $mail->Body .= $fields["email"]."      ";
+    $mail->Body .= $fields["message"]."      ";
+    //Read an HTML message body from an external file, convert referenced images to embedded,
+    //convert HTML into a basic plain-text alternative body
+    //$mail->msgHTML(file_get_contents('contents.html'), __DIR__);
+    //Replace the plain text body with one created manually
+    $mail->AltBody = $fields["name"]."      ";
+    $mail->AltBody .= $fields["email"]."      ";
+    $mail->AltBody .= $fields["message"]."      ";
+
+		if (!$mail->send()){
+			$mailErr = "Signup confirmation email failed to send";
+		}
+
+		header('Location: index.php');
+		exit();
+  }
 ?>
 
 
@@ -116,15 +112,22 @@
 				<div class="navbar-nav">
 					<a class="nav-item nav-link" href="about.php" style="border:none">About Us</a>
 					<a class="nav-item nav-link" href="contact.php" style="border:none">Contact Us</a>
-					<?php if(empty($_SESSION['logged_in'])) : ?>
-						<a class="nav-item nav-link" href="login.php" style="border:none">Login</a>
-						<a class="nav-item nav-link" href="signup.php" style="border:none">Sign Up</a>
-					<?php else :?>
+					<?php if(isset($_SESSION['logged_in']) and $_SESSION['logged_in'] == TRUE) : ?>
+            <a class="nav-item nav-link" href="user.php" style="border:none">My Account</a>
 						<a class="btn btn-primary" href="log_out.php">Log Out</a>
+          <?php else :?>
+            <a class="nav-item nav-link" href="login.php" style="border:none">Login</a>
+  					<a class="nav-item nav-link" href="signup.php" style="border:none">Sign Up</a>
 					<?php endif;?>
 				</div>
 			</nav>
 		</header>
+
+		<?php if(isset($mailErr)):?>
+      <div class="alert alert-danger" role="alert">
+        <?php echo $mailErr;?>
+      </div>
+    <?php endif;?>
 
 		<div class="jumbotron text-center">
 			<h1>Contact Us</h1>

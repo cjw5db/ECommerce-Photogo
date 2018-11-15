@@ -20,11 +20,12 @@
 				<div class="navbar-nav">
 					<a class="nav-item nav-link" href="about.php" style="border:none">About Us</a>
 					<a class="nav-item nav-link" href="contact.php" style="border:none">Contact Us</a>
-					<?php if(empty($_SESSION['logged_in'])) : ?>
-						<a class="nav-item nav-link" href="login.php" style="border:none">Login</a>
-						<a class="nav-item nav-link" href="signup.php" style="border:none">Sign Up</a>
-					<?php else :?>
+					<?php if(isset($_SESSION['logged_in']) and $_SESSION['logged_in'] == TRUE) : ?>
+            <a class="nav-item nav-link" href="user.php" style="border:none">My Account</a>
 						<a class="btn btn-primary" href="log_out.php">Log Out</a>
+          <?php else :?>
+            <a class="nav-item nav-link" href="login.php" style="border:none">Login</a>
+  					<a class="nav-item nav-link" href="signup.php" style="border:none">Sign Up</a>
 					<?php endif;?>
 				</div>
 			</nav>

@@ -1,11 +1,19 @@
 <?php
-    use PHPMailer\PHPMailer\PHPMailer;
-    use PHPMailer\PHPMailer\Exception;
+  use PHPMailer\PHPMailer\PHPMailer;
+  use PHPMailer\PHPMailer\Exception;
+
+  session_start();
+	if (isset($_SESSION['logged_in'])){
+		if ($_SESSION['logged_in'] == TRUE){
+			header('Location: index.php');
+		}
+	}
 
   if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $nameErr = $emailErr = $addressErr = $cityErr =
-    $stateErr = $zipErr = $pwdErr = $pwdConfirmErr = NULL;
+    $stateErr = $zipErr = $pwdErr = $pwdConfirmErr =
+    $mailErr = NULL;
 
     $anyErr = FALSE;
 
@@ -16,7 +24,8 @@
       'city' => '',
       'state' => '',
       'zipcode' => '',
-      'passwordhash' => '');
+      'passwordhash' => '',
+      'favorites' => '{}');
 
     if(empty($_POST["usersName"])){
       $nameErr = "Name must have a value";
@@ -139,49 +148,46 @@
       }
       else{
         pg_insert($db, "users", $fields);
-        session_start();
         $_SESSION['email'] = $fields['email'];
 				$_SESSION['logged_in'] = TRUE;
+
+        //email part
+        //Load Composer's autoloader
+        require '../vendor/autoload.php';
+        //Create a new PHPMailer instance
+        $mail = new PHPMailer;
+        $outlook = 'photogo2018@gmail.com';
+        $pwd = '2018photogo!';
+        $host = 'smtp.gmail.com';
+
+        $mail->IsSMTP();
+        $mail->Host = $host;
+        $mail->SMTPAuth = TRUE;
+        $mail->Username = $outlook;
+        $mail->Password = $pwd;
+        $mail->Port=587;
+        //Set who the message is to be sent from
+        $mail->setFrom('photogo2018@gmail.com', 'Photo Go');
+        //Set an alternative reply-to address
+        $mail->addReplyTo('photogo2018@gmail.com', 'Photo Go');
+        //Set who the message is to be sent to
+        $mail->addAddress($fields["email"], $fields["name"]);
+        //Set the subject line
+        $mail->Subject = 'PhotoGo sign up Confirmation!';
+        //Read an HTML message body from an external file, convert referenced images to embedded,
+        //convert HTML into a basic plain-text alternative body
+        //$mail->msgHTML(file_get_contents('contents.html'), __DIR__);
+        //Replace the plain text body with one created manually
+        $mail->Body = 'This is an confirmation email. You have sucessfully signed up to PhotoGo! Please enjoy all the features PhotoGo has to offer.';
+        $mail->AltBody = 'This is an confirmation email. You have sucessfully signed up to PhotoGo! Please enjoy all the features PhotoGo has to offer.';
+        if (!$mail->send()){
+          $mailErr = "Signup confirmation email failed to send";
+        }
+
+        header('Location: user.php');
+        exit();
       }
     }
-      //email part
-      //Load Composer's autoloader
-      require '../vendor/autoload.php';
-      //Create a new PHPMailer instance
-      $mail = new PHPMailer;
-      $outlook = 'photogo2018@gmail.com';
-      $pwd = '2018photogo!';
-      $host = 'smtp.gmail.com';
-
-      $mail->IsSMTP();
-      $mail->Host = $host;
-      $mail->SMTPAuth = TRUE;
-      $mail->Username = $outlook;
-      $mail->Password = $pwd;
-      $mail->Port=587;
-      //Set who the message is to be sent from
-      $mail->setFrom('photogo2018@gmail.com', 'Photo Go');
-      //Set an alternative reply-to address
-      $mail->addReplyTo('photogo2018@gmail.com', 'Photo Go');
-      //Set who the message is to be sent to
-      $mail->addAddress($fields["email"], $fields["name"]);
-      //Set the subject line
-      $mail->Subject = 'PhotoGo sign up Confirmation!';
-      //Read an HTML message body from an external file, convert referenced images to embedded,
-      //convert HTML into a basic plain-text alternative body
-      //$mail->msgHTML(file_get_contents('contents.html'), __DIR__);
-      //Replace the plain text body with one created manually
-      $mail->Body = 'This is an confirmation email. You have sucessfully signed up to PhotoGo! Please enjoy all the features Photo Go has to offer.';
-      $mail->AltBody = 'This is an confirmation email. You have sucessfully signed up to PhotoGo! Please enjoy all the features PhotoGo has to offer.';
-      $mail->send();
-      //send the message, check for errors
-      /*
-      if (!$mail->send()) {
-          echo "Mailer Error: " . $mail->ErrorInfo;
-      } else {
-          echo "Message sent!";
-      }
-       */
 
   }
  ?>
@@ -209,6 +215,12 @@
         </div>
       </nav>
     </header>
+
+    <?php if(isset($mailErr)):?>
+      <div class="alert alert-danger" role="alert">
+        <?php echo $mailErr;?>
+      </div>
+    <?php endif;?>
 
     <div class="jumbotron text-center">
       <h1>Sign Up</h1>

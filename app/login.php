@@ -1,19 +1,25 @@
 <?php
+	session_start();
+	if (isset($_SESSION['logged_in'])){
+		if ($_SESSION['logged_in'] == TRUE){
+			header('Location: index.php');
+		}
+	}
+
 	$emailErr = $pwdErr = NULL;
 
 	if ($_SERVER["REQUEST_METHOD"] == "POST"){
 
 		include('get_db_connection.php');
-		$email = htmlspecialchars($_POST{'usersEmail'});
+		$email = htmlspecialchars($_POST['usersEmail']);
 		$password = htmlspecialchars($_POST['usersPwd']);
 
 		$result = pg_query_params($db, "SELECT * FROM users WHERE email = $1", array($email));
 		if (pg_num_rows($result) != 0){
 			if(password_verify($password, pg_fetch_result($result, 0, 'passwordhash'))){
-				session_start();
 				$_SESSION['email'] = $email;
 				$_SESSION['logged_in'] = TRUE;
-				header('Location: index.php');
+				header('Location: user.php');
 				exit();
 			}
 			else{

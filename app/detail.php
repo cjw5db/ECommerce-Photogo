@@ -32,11 +32,12 @@
 		    <div class="navbar-nav">
 		      <a class="nav-item nav-link" href="about.php" style="border:none">About Us</a>
 		      <a class="nav-item nav-link" href="contact.php" style="border:none">Contact Us</a>
-          <?php if(empty($_SESSION['logged_in'])) : ?>
-  		      <a class="nav-item nav-link" href="login.php" style="border:none">Login</a>
-  					<a class="nav-item nav-link" href="signup.php" style="border:none">Sign Up</a>
-          <?php else :?>
+          <?php if(isset($_SESSION['logged_in']) and $_SESSION['logged_in'] == TRUE) : ?>
+            <a class="nav-item nav-link" href="user.php" style="border:none">My Account</a>
 						<a class="btn btn-primary" href="log_out.php">Log Out</a>
+          <?php else :?>
+            <a class="nav-item nav-link" href="login.php" style="border:none">Login</a>
+  					<a class="nav-item nav-link" href="signup.php" style="border:none">Sign Up</a>
 					<?php endif;?>
 		    </div>
 			</nav>
@@ -57,11 +58,23 @@
     						</footer>
     					</div>
     					<div class="card-footer text-center">
-                <button type="button" style = "margin:10px" class="btn btn-success btn-lg" data-toggle="modal" data-target="#purchaseModal">
-                  Purchase - <i class="fab fa-bitcoin"></i><?php echo pg_fetch_result($result, 0, 'price')?>
-                  <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#conversionModal">
-                    Convert Price ($USD)
-                </button>
+                <div class="btn-group">
+                  <button type="button" class="btn btn-success btn-lg">
+                    <i class="fab fa-bitcoin"></i><?php echo pg_fetch_result($result, 0, 'price')?>
+                  </button>
+                  <?php if(isset($_SESSION['logged_in'])) : ?>
+                    <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#purchaseModal">
+                      Purchase
+                    </button>
+                  <?php else : ?>
+                    <a class="btn btn-warning btn-lg" href="login.php">
+                      Log in to purchase
+                    </a>
+                  <?php endif ;?>
+                  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#conversionModal">
+                      Convert Price ($USD)
+                  </button>
+                </div>
     					</div>
     				</div>
           </div>
