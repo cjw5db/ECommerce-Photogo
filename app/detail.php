@@ -2,36 +2,22 @@
   session_start();
   $picPath = "images/fulls/".$_GET['id'].".jpg";
   include('get_db_connection.php');
-  $result = pg_query_params($db, "SELECT * FROM products WHERE id = $1", array($_GET['id']));
-  if (pg_num_rows($result) != 0){
-    $price = pg_fetch_result($result, 0, 'price');
+  $photoResult = pg_query_params($db, "SELECT * FROM products WHERE id = $1", array($_GET['id']));
+  if (pg_num_rows($photoResult) != 0){
+    $price = pg_fetch_result($photoResult, 0, 'price');
+    $price = floatval($price);
 
-    if ($_SERVER["REQUEST_METHOD"] == "POST"){
-
-      $code = htmlspecialchars($_POST['code']);
-      echo $code;
-      $photoid = htmlspecialchars($_GET['id']);
-      $result = pg_query_params($db, "SELECT usersclaimed, discountpercent FROM discounts WHERE photoid = $1", array($photoid));
-      $usersclaimed = pg_fetch_result($result, 0, 'usersclaimed');
+    $photoid = htmlspecialchars($_GET['id']);
+    $result = pg_query_params($db, "SELECT array_to_json(usersclaimed) AS usersclaimed FROM discounts WHERE photoid = $1", array($photoid));
+    if(pg_num_rows($result) != 0){
+      $usersclaimed = json_decode(pg_fetch_result($result, 0, 'usersclaimed'));
+      $result = pg_query_params($db, "SELECT discountpercent FROM discounts WHERE photoid = $1", array($photoid));
       $discountpercent = pg_fetch_result($result, 0, 'discountpercent');
-      echo $usersclaimed;
-      echo $discountpercent;
+      if(in_array($_SESSION['email'], $usersclaimed)){
+        $floatpercent = floatval($discountpercent);
+        $price = $price * (1-$floatpercent);
+      }
     }
-    //
-    // //do a SELECT query on database to get usersclaimed array and discountpercentage associated with this photo's id number (see add_favorite.php)
-    // $photoid = htmlspecialchars($_GET['id']);
-    // $result = pg_query_params($db, "SELECT usersclaimed, discountpercent FROM discounts WHERE photoid = $photoid");
-    //
-    // //do a SELECT query on database to get user id associated with this user's email (in $_SESSION)
-    // $userID = pg_query_params($db, "SELECT * FROM users WHERE email = $1", array($_SESSION['email']));
-    //
-    // //if the user's id number is present in the usersclaimed array, then apply discount:
-    // $idexists = pg_query_params($db, "SELECT * FROM usersclaimed WHERE id = $userID");
-    // if(!empty($idexists)){
-    //   $price = $price*(1-$discount);
-    // }
-    //
-    // $result = pg_query_params($db, "UPDATE discounts SET usersclaimed = array_remove(usersclaimed, $id)", array($id, $_SESSION['email']));
   }
 
   $json = file_get_contents('https://blockchain.info/ticker');
@@ -71,6 +57,11 @@
 		</header>
 
     <body>
+      <?php if(isset($discountpercent)) :?>
+        <div class="alert alert-success text-center" role="alert">
+          <?php echo $discountpercent."%" ;?> Discount Applied!
+        </div>
+      <?php endif ;?>
       <div class="container">
         <div class="media">
           <img src=<?php echo $picPath ?> class="rounded mr-3" style="width:640px;height:480px;">
@@ -78,34 +69,16 @@
 
             <div class="card">
     					<div class="card-body">
-    						<h5 class="card-title"><?php echo pg_fetch_result($result, 0, 'title')?></h5>
-    	      		<p class="card-text"><?php echo pg_fetch_result($result, 0, 'description')?></p>
+    						<h5 class="card-title"><?php echo pg_fetch_result($photoResult, 0, 'title')?></h5>
+    	      		<p class="card-text"><?php echo pg_fetch_result($photoResult, 0, 'description')?></p>
     	      		<footer class="blockquote-footer text-right">
-    							<small class="text-muted"><?php echo pg_fetch_result($result, 0, 'photographer')?></small>
+    							<small class="text-muted"><?php echo pg_fetch_result($photoResult, 0, 'photographer')?></small>
     						</footer>
     					</div>
     					<div class="card-footer text-center">
-                <!-- add button here that provides a form to the user to submit a discount code
-                  url for submit should be <php echo "discount.php?id=".$_GET['id'] >
-                  FORM MUST BE ON THIS PAGE, NOT A LINK TO A PAGE WITH A FORM -->
-                <div class="dropdown">
-                  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Discount
-                  </button>
-                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <form class="px-4 py-3" action='<?php htmlspecialchars($_SERVER["PHP_SELF"]);?>' method="post" role="form">
-                      <div class="form-group">
-                        <label for="code">Discount Code</label>
-                        <input type="text" class="form-control" id="code" name='code' placeholder="my-code">
-                      </div>
-                      <button type="submit" class="btn btn-primary">Apply Code</button>
-                    </form>
-                  </div>
-                </div>
-
                 <div class="btn-group">
                   <button type="button" class="btn btn-success btn-lg">
-                    <i class="fab fa-bitcoin"></i><?php echo pg_fetch_result($result, 0, 'price')?>
+                    <i class="fab fa-bitcoin"></i><?php echo $price?>
                   </button>
                   <?php if(isset($_SESSION['logged_in'])) : ?>
                     <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#purchaseModal">
@@ -119,6 +92,20 @@
                   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#conversionModal">
                       Convert Price ($USD)
                   </button>
+                </div>
+                <div class="dropdown">
+                  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Discount
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <form class="px-4 py-3" action='discount.php' method="post" role="form">
+                      <div class="form-group">
+                        <label for="code">Discount Code</label>
+                        <input type="text" class="form-control" id="code" name='code' placeholder="my-code">
+                      </div>
+                      <button type="submit" class="btn btn-primary">Apply Code</button>
+                    </form>
+                  </div>
                 </div>
     					</div>
     				</div>
