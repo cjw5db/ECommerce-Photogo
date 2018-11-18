@@ -12,8 +12,6 @@
 			}
 		}
 	}
-
-
  ?>
 
 <!DOCTYPE HTML>
