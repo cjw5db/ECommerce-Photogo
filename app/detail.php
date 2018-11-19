@@ -76,7 +76,7 @@
     						<h5 class="card-title"><?php echo pg_fetch_result($photoResult, 0, 'title')?></h5>
     	      		<p class="card-text"><?php echo pg_fetch_result($photoResult, 0, 'description')?></p>
     	      		<footer class="blockquote-footer text-right">
-    							<small class="text-muted"><?php echo pg_fetch_result($photoResult, 0, 'photographer')?></small>
+    							<small class="text-muted"><?php echo pg_fetch_result($photoResult, 0, 'photographer')." (".pg_fetch_result($photoResult, 0, 'photographeremail').")"?></small>
     						</footer>
     					</div>
     					<div class="card-footer text-center">
