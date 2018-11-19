@@ -178,8 +178,8 @@
         //convert HTML into a basic plain-text alternative body
         //$mail->msgHTML(file_get_contents('contents.html'), __DIR__);
         //Replace the plain text body with one created manually
-        $mail->Body = 'This is an confirmation email. You have sucessfully signed up to PhotoGo! Please enjoy all the features PhotoGo has to offer.';
-        $mail->AltBody = 'This is an confirmation email. You have sucessfully signed up to PhotoGo! Please enjoy all the features PhotoGo has to offer.';
+        $mail->Body = 'This is a confirmation email. You have sucessfully signed up for PhotoGo! Please enjoy all the features PhotoGo has to offer.';
+        $mail->AltBody = 'This is a confirmation email. You have sucessfully signed up for PhotoGo! Please enjoy all the features PhotoGo has to offer.';
         if (!$mail->send()){
           $mailErr = "Signup confirmation email failed to send";
         }

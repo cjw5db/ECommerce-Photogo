@@ -1,21 +1,25 @@
 <?php
   session_start();
   $picPath = "images/fulls/".$_GET['id'].".jpg";
+  $discountapplied = FALSE;
   include('get_db_connection.php');
   $photoResult = pg_query_params($db, "SELECT * FROM products WHERE id = $1", array($_GET['id']));
   if (pg_num_rows($photoResult) != 0){
     $price = pg_fetch_result($photoResult, 0, 'price');
     $price = floatval($price);
 
-    $photoid = htmlspecialchars($_GET['id']);
-    $result = pg_query_params($db, "SELECT array_to_json(usersclaimed) AS usersclaimed FROM discounts WHERE photoid = $1", array($photoid));
-    if(pg_num_rows($result) != 0){
-      $usersclaimed = json_decode(pg_fetch_result($result, 0, 'usersclaimed'));
-      $result = pg_query_params($db, "SELECT discountpercent FROM discounts WHERE photoid = $1", array($photoid));
-      $discountpercent = pg_fetch_result($result, 0, 'discountpercent');
-      if(in_array($_SESSION['email'], $usersclaimed)){
-        $floatpercent = floatval($discountpercent);
-        $price = $price * (1-$floatpercent);
+    if(isset($_SESSION['logged_in']) and $_SESSION['logged_in'] == TRUE){
+      $photoid = htmlspecialchars($_GET['id']);
+      $result = pg_query_params($db, "SELECT array_to_json(usersclaimed) AS usersclaimed FROM discounts WHERE photoid = $1", array($photoid));
+      if(pg_num_rows($result) != 0){
+        $usersclaimed = json_decode(pg_fetch_result($result, 0, 'usersclaimed'));
+        $result = pg_query_params($db, "SELECT discountpercent FROM discounts WHERE photoid = $1", array($photoid));
+        $discountpercent = pg_fetch_result($result, 0, 'discountpercent');
+        if(in_array($_SESSION['email'], $usersclaimed)){
+          $floatpercent = floatval($discountpercent);
+          $price = $price * (1-$floatpercent);
+          $discountapplied = TRUE;
+        }
       }
     }
   }
@@ -57,9 +61,9 @@
 		</header>
 
     <body>
-      <?php if(isset($discountpercent)) :?>
+      <?php if($discountapplied) :?>
         <div class="alert alert-success text-center" role="alert">
-          <?php echo $discountpercent."%" ;?> Discount Applied!
+          <?php echo ($discountpercent * 100)."%" ;?> Discount Applied!
         </div>
       <?php endif ;?>
       <div class="container">
@@ -76,7 +80,7 @@
     						</footer>
     					</div>
     					<div class="card-footer text-center">
-                <div class="btn-group">
+                <div class="btn-group" role="group">
                   <button type="button" class="btn btn-success btn-lg">
                     <i class="fab fa-bitcoin"></i><?php echo $price?>
                   </button>
@@ -92,20 +96,23 @@
                   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#conversionModal">
                       Convert Price ($USD)
                   </button>
-                </div>
-                <div class="dropdown">
-                  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Discount
-                  </button>
-                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <form class="px-4 py-3" action='discount.php' method="post" role="form">
-                      <div class="form-group">
-                        <label for="code">Discount Code</label>
-                        <input type="text" class="form-control" id="code" name='code' placeholder="my-code">
+
+                  <?php if(isset($_SESSION['logged_in']) and $_SESSION['logged_in'] == TRUE) :?>
+                    <div class="btn-group" role="group">
+                      <button class="btn btn-secondary btn-lg dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Discount
+                      </button>
+                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <form class="px-4 py-3" action='discount.php' method="post" role="form">
+                          <div class="form-group">
+                            <label for="code">Discount Code</label>
+                            <input type="text" class="form-control" id="code" name='code' placeholder="my-code">
+                          </div>
+                          <button type="submit" class="btn btn-primary">Apply Code</button>
+                        </form>
                       </div>
-                      <button type="submit" class="btn btn-primary">Apply Code</button>
-                    </form>
-                  </div>
+                    </div>
+                  <?php endif ;?>
                 </div>
     					</div>
     				</div>

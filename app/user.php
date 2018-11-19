@@ -49,8 +49,8 @@
     <div class="jumbotron text-center">
       <h1>Welcome, <?php echo $name ?>!</h1>
       <p>
-        <a href="update_email.php" class="btn btn-primary my-3">Update Email</a>
-        <a href="update_password.php" class="btn btn-primary my-3">Update Password</a>
+        <a href="update_email.php" class="btn btn-primary btn-lg my-3">Update Email</a>
+        <a href="update_password.php" class="btn btn-primary btn-lg my-3">Update Password</a>
       </p>
     </div>
 
